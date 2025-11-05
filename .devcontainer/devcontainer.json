@@ -1,0 +1,8 @@
+{
+  "name": "GitOps Challenge",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "docker-in-docker": "latest"
+  },
+  "postStartCommand": "bash .devcontainer/setup-kind.sh"
+}
