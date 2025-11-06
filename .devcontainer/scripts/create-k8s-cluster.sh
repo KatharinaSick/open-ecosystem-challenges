@@ -2,14 +2,18 @@
 set -e
 
 echo "Installing Kind..."
-curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-amd64
-chmod +x ./kind
-sudo mv ./kind /usr/local/bin/kind
+curl -sS https://webi.sh/kind@v0.30.0 | sh
 
 echo "Installing kubectl..."
 curl -LO "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl"
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
+
+echo "Installing kubens..."
+curl -sS https://webi.sh/kubens@v0.9.5 | bash
+
+echo "Installing k9s..."
+curl -sS https://webinstall.dev/k9s@0.50.16 | bash
 
 echo "Starting Kind cluster..."
 kind create cluster --name open-ecosystem-challenge --wait 300s
