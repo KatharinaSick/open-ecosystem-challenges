@@ -1,8 +1,9 @@
 {
-  "name": "GitOps Challenge",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "name": "Open Ecosystem Quest: GitOps Progressive Delivery with Release Telemetry",
+  "image": "mcr.microsoft.com/devcontainers/base:alpine-3.21",
   "features": {
-    "docker-in-docker": "latest"
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    }
   },
   "postStartCommand": "bash .devcontainer/setup-kind.sh"
 }
