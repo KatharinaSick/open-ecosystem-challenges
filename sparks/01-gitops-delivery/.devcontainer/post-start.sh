@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-echo "🕹️ quest"
+echo "✨ Spark"
 
 ../../scripts/init-kind.sh
