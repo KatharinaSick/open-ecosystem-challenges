@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e
 
-echo "🕹️ quest"
-
-../scripts/init-kind.sh
+../scripts/create-k8s-cluster.sh
+../scripts/install-argocd.sh

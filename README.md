@@ -1,11 +1,2 @@
-[![Static Badge](https://img.shields.io/badge/Open_Ecosystem_Challenge-Quest-FF9800)](https://open-ecosystem.discourse.group/t/about-the-challenges-category/16)
-# Quest: GitOps Progressive Delivery with Release Telemetry
+# Open Ecosystem Challenges
 
-Challenge story
-
-## What you'll learn
-
-## Time Commitment
-
-## Get Started
-Link to documentation
