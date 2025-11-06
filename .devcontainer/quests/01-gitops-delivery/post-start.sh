@@ -3,4 +3,4 @@ set -e
 
 echo "🕹️ quest"
 
-../../scripts/init-kind.sh
+../scripts/init-kind.sh

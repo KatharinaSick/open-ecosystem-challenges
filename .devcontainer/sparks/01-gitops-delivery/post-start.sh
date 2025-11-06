@@ -3,4 +3,4 @@ set -e
 
 echo "✨ Spark"
 
-../../scripts/init-kind.sh
+../scripts/init-kind.sh
