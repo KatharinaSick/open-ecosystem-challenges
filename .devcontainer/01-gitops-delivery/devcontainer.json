@@ -5,5 +5,13 @@
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
     }
   },
-  "postStartCommand": "bash .devcontainer/post-start.sh"
+  "postCreateCommand": "bash .devcontainer/01-gitops-delivery/post-create.sh",
+  "postStartCommand": "bash .devcontainer/01-gitops-delivery/post-start.sh",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "challenges/01-gitops-delivery/README.md"
+      ]
+    }
+  }
 }
