@@ -14,8 +14,4 @@ rm argocd-linux-amd64
 kubectl -n argocd patch deployment argocd-server \
   --type='json' \
   -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--insecure"}]'
-kubectl -n argocd rollout status deployment/argocd-server
-
-# Expose Argo CD Server on HTTP
-kubectl port-forward svc/argocd-server -n argocd 8080:80 &
-
+kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=120s
