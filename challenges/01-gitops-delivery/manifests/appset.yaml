@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: echo-web
+  name: echo-server
   namespace: argocd
 spec:
   generators:
@@ -12,7 +12,7 @@ spec:
           - path: challenges/01-gitops-delivery/manifests/overlays/*
   template:
     metadata:
-      name: echo-web-{{path.basename}}
+      name: echo-server-{{path.basename}}
       labels:
         app.kubernetes.io/managed-by: argocd
     spec:
