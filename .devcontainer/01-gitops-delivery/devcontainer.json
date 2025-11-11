@@ -20,5 +20,8 @@
       "label": "ArgoCD",
       "onAutoForward": "notify"
     }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
   }
 }

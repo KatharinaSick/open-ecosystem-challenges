@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: echo-web
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/KatharinaSick/open-ecosystem-challenges.git # TODO set during init
+        revision: HEAD
+        directories:
+          - path: challenges/01-gitops-delivery/manifests/overlays/*
+  template:
+    metadata:
+      name: echo-web-{{path.basename}}
+      labels:
+        app.kubernetes.io/managed-by: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/KatharinaSick/open-ecosystem-challenges.git # TODO set during init
+        targetRevision: HEAD
+        path: challenges/01-gitops-delivery/manifests/overlays/{{path.basename}}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: echo-{{path.basename}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true

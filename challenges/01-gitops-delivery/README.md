@@ -1,4 +1,7 @@
 [![Static Badge](https://img.shields.io/badge/Open_Ecosystem_Challenge-Quest-FF9800)](https://open-ecosystem.discourse.group/t/about-the-challenges-category/16)
+
+[![Static Badge](https://img.shields.io/badge/GitHub_Codespace-Launch-green?logo=github)](https://github.com/codespaces/new?hide_repo_select=true&repo=1090520100&skip_quickstart=true&machine=basicLinux32gb&devcontainer_path=.devcontainer/01-gitops-delivery/devcontainer.json&geo=EuropeWest)
+
 # Quest: GitOps Progressive Delivery with Release Telemetry
 
 Challenge story
