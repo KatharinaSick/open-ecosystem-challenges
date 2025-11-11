@@ -16,6 +16,6 @@ echo "Installing k9s..."
 curl -sS https://webinstall.dev/k9s@0.50.16 | bash
 
 echo "Starting Kind cluster..."
-kind create cluster --config ./config.yaml --wait 300s
+kind create cluster --config .devcontainer/scripts/kubernetes/config.yaml --wait 300s
 kubectl cluster-info
 

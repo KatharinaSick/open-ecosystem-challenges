@@ -13,5 +13,12 @@
         "challenges/01-gitops-delivery/README.md"
       ]
     }
+  },
+  "forwardPorts": [30100],
+  "portsAttributes": {
+    "30100": {
+      "label": "ArgoCD",
+      "onAutoForward": "notify"
+    }
   }
 }
