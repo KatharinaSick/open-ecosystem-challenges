@@ -4,5 +4,5 @@ metadata:
   name: argocd-cm
 data:
   accounts.alice: login
-  ui.bannercontent: 'Challenge 1: GitOps Delivery'
-  ui.bannerurl: "https://argoproj.github.io"
+  ui.bannercontent: 'Challenge Instructions: GitOps Progressive Delivery with Release Telemetry' # TODO make flexible
+  ui.bannerurl: "https://argoproj.github.io" # TODO make flexible

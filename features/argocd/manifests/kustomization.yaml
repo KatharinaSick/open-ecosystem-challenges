@@ -9,6 +9,7 @@ resources:
 patches:
   - path: overlays/argocd-server-service.yaml
   - path: overlays/argocd-cm.yaml
+  - path: overlays/argocd-rbac-cm.yaml
   - patch: |-
       - op: add
         path: /spec/template/spec/containers/0/args/-
