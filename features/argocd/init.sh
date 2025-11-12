@@ -50,7 +50,7 @@ kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
 
 echo "Setting password for alice user..."
 admin_password=$(argocd admin initial-password -n argocd)
-argocd login --insecure --username admin --password "$admin_password" --port-forward-namespace argocd
+argocd login localhost:8080 --insecure --username admin --password "$admin_password" --port-forward
 argocd account update-password \
   --account alice \
   --current-password $admin_password \
