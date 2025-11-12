@@ -36,19 +36,19 @@ for arg in "$@"; do
   esac
 done
 
-echo "Installing Argo CD..."
+echo "✨ Installing Argo CD"
 kubectl create namespace argocd
 kubectl apply -k features/argocd/manifests
 
-echo "Installing Argo CD CLI..."
+echo "✨ Installing Argo CD CLI"
 curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v3.2.0/argocd-linux-amd64
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
 
-echo "Waiting for Argo CD server to be ready..."
+echo "✨ Waiting for Argo CD server to be ready"
 kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
 
-echo "Setting password for alice user..."
+echo "✨ Setting password for user alice"
 admin_password=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 argocd login localhost:30100 --username admin --password "$admin_password" --plaintext
 argocd account update-password \
@@ -57,5 +57,7 @@ argocd account update-password \
   --new-password a-super-secure-password
 
 if [ "$read_only" = true ]; then
+  echo "✨ Disabling admin user for read-only mode"
+  # TODO disable admin
   echo "read only mode enabled"
 fi
