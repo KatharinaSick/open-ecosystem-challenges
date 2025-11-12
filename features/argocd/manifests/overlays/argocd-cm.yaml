@@ -1,0 +1,7 @@
+# Change the Argo CD server service to NodePort to allow external access
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  accounts.alice: login
