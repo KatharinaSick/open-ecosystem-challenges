@@ -58,6 +58,7 @@ argocd account update-password \
 
 if [ "$read_only" = true ]; then
   echo "✨ Disabling admin user for read-only mode"
-  # TODO disable admin
-  echo "read only mode enabled"
+  kubectl -n argocd patch configmap argocd-cm --type merge -p '{"data":{"accounts.admin.enabled":"false"}}'
+  kubectl -n argocd delete secret argocd-initial-admin-secret
+  kubectl -n argocd rollout restart deployment/argocd-server
 fi
