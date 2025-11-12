@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-chmod +x .devcontainer/scripts/kubernetes/create-cluster.sh
-.devcontainer/scripts/kubernetes/create-cluster.sh
+chmod +x features/kubernetes/create-cluster.sh
+features/kubernetes/create-cluster.sh
 
-chmod +x .devcontainer/scripts/argocd/install.sh
-.devcontainer/scripts/argocd/install.sh
+chmod +x features/argocd/install.sh
+features/argocd/install.sh

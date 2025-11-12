@@ -16,4 +16,6 @@ kubectl -n argocd patch deployment argocd-server \
   -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--insecure"}]'
 
 # Change the Argo CD server service to NodePort to allow external access
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort", "ports": [{"name": "http", "port": 80, "protocol": "TCP", "targetPort": 8080, "nodePort": 30100}]}}'
+kubectl -n argocd patch svc argocd-server \
+  -p '{"spec": {"type": "NodePort", "ports": [{"name": "http", "port": 80, "protocol": "TCP", "targetPort": 8080, "nodePort": 30100}]}}'
+
