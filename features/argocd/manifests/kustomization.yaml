@@ -7,5 +7,14 @@ resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0/manifests/install.yaml
 
 patches:
-  - path: overlays/argocd-server-deployment.yaml
   - path: overlays/argocd-server-service.yaml
+  - path: overlays/argocd-cm.yaml
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --insecure
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: argocd-server
