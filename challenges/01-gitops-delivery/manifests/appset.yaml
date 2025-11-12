@@ -12,7 +12,7 @@ spec:
           - path: challenges/01-gitops-delivery/manifests/overlays/*
   template:
     metadata:
-      name: echo-server-{{path.basename}}
+      name: echo-server
       labels:
         app.kubernetes.io/managed-by: argocd
     spec:
@@ -23,12 +23,4 @@ spec:
         path: challenges/01-gitops-delivery/manifests/overlays/{{path.basename}}
       destination:
         server: https://kubernetes.default.svc
-        namespace: echo-{{path.basename}}
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
-          - PrunePropagationPolicy=foreground
-          - PruneLast=true
+        namespace: echo
