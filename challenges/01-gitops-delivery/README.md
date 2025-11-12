@@ -41,7 +41,13 @@ To verify your solution, run the provided smoke test script. If it passes, push 
 
 There are **3 levels** to this challenge, each building on the previous one and increasing in difficulty.
 
----
+TODO add argocd login instructions somewhere
+
+TODO test with. maybe create ./echo script? 
+```
+kubectl -n echo-prod port-forward svc/echo-server-prod 8080:80
+curl -X POST http://localhost:8080 -d 'Hello World!'
+```
 
 ### 🥇 Level 1: Restore the Echo Server
 
@@ -67,7 +73,7 @@ If the test passes, your solution is correct for Level 1.
 
 ## 📤 Submission
 
-TODO. Invoke workflow manually? I think that's better with GitOps stuff :) 
+TODO. Invoke workflow manually? I think that's better with GitOps stuff :)
 
 - Push your changes to the `main` branch.
 - The GitHub Actions workflow will run a full verification.
