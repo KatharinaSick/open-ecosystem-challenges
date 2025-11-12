@@ -46,7 +46,7 @@ sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
 
 echo "Waiting for Argo CD server to be ready..."
-kubectl wait --namespace argocd --for=condition=Available=True deployment/argocd-server --timeout=300s
+kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
 
 echo "Setting password for alice user..."
 admin_password=$(argocd admin initial-password -n argocd)
