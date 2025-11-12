@@ -45,8 +45,8 @@ curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/dow
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
 
-echo "Waiting for Argo CD server to be ready..."
-kubectl wait --namespace argocd --for=condition=available deployment/argocd-server --timeout=300s
+#echo "Waiting for Argo CD server to be ready..."
+#kubectl wait --namespace argocd --for=condition=available deployment/argocd-server --timeout=300s
 
 echo "Setting password for alice user..."
 admin_password=$(argocd admin initial-password -n argocd)
