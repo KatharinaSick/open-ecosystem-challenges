@@ -1,14 +1,14 @@
 site_name: "Open Ecosystem Challenges"
 repo_name: "View on GitHub"
 repo_url: "https://github.com/KatharinaSick/open-ecosystem-challenges" # TODO update URL when moving
-docs_dir: /
+docs_dir: docs
 nav:
   - 'Overview': docs/index.md
-  - 'Challenge 1: Echoes Lost in Orbit':
-    - 'Overview': challenges/01-gitops-delivery/docs/index.md
-    - 'Level 1': challenges/01-gitops-delivery/docs/level-1.md
+  - 'Challenges': '*include ./challenges/*/mkdocs.yaml'
 theme:
   name: material
+plugins:
+  - monorepo
 #  features:
 #    - content.code.copy
 #  palette:

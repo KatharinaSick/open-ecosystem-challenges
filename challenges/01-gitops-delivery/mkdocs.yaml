@@ -1,0 +1,5 @@
+site_name: 'Challenge 1: Echoes Lost in Orbit'
+
+nav:
+  - Overview: index.md
+  - Level 1: level-1.md
