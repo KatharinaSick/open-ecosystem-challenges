@@ -33,4 +33,4 @@ echo "💡 SUMMARY 💡"
 echo "============="
 echo "If both, staging and prod, are healthy, you passed the first checkpoint! 🎉"
 echo "Proceed with pushing your changes to main and trigger the deep verification workflow."
-# TODO add more instructions
+# 🚧 TODO add more instructions

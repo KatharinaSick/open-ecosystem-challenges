@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
-  accounts.alice: login
+  accounts.readonly: login
   ui.bannercontent: 'Challenge Instructions: GitOps Progressive Delivery with Release Telemetry' # TODO make flexible
-  ui.bannerurl: "https://argoproj.github.io" # TODO make flexible
+  ui.bannerurl: "https://katharinasick.github.io/open-ecosystem-challenges/" # TODO make flexible

@@ -1,7 +1,7 @@
-site_name: '1: Echoes Lost in Orbit'
+site_name: '💭 01: Echoes Lost in Orbit'
 
 nav:
-  - Overview: index.md
+  - Introduction: index.md
   - level-1.md
   - level-2.md
   - level-3.md
