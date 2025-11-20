@@ -1,0 +1,29 @@
+{
+  "name": "Adventure 01 | \uD83D\uDFE2 Easy (Broken Echoes)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/01-echoes-lost-in-orbit_easy/post-create.sh",
+  "postStartCommand": "bash .devcontainer/01-echoes-lost-in-orbit_easy/post-start.sh",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "adventures/01-echoes-lost-in-orbit/README.md"
+      ]
+    }
+  },
+  "forwardPorts": [
+    30100
+  ],
+  "portsAttributes": {
+    "30100": {
+      "label": "ArgoCD",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

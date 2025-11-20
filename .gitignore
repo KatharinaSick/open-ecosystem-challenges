@@ -1,0 +1,14 @@
+# MacOS filesystem
+.DS_Store
+
+# Editors
+.idea
+.vscode
+.zed
+
+# Devbox
+.devbox
+devbox.*
+
+# Custom ignores
+.prompts

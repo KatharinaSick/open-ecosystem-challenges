@@ -1,0 +1,20 @@
+name: 'Verify Adventure'
+on:
+  workflow_dispatch:
+    inputs:
+      challenge:
+        description: The challenge to verify
+        required: true
+        type: choice
+        options:
+          - 'Adventure 01 | 🟢 Easy (Broken Echoes)'
+jobs:
+  easy:
+    name: 'Adventure 01 | 🟢 Easy (Broken Echoes)'
+    if: ${{ inputs.challenge == 'Adventure 01 | 🟢 Easy (Broken Echoes)' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dynatrace-oss/open-ecosystem-challenge-verifier@main
+        with:
+          challenge: '01-echoes-lost-in-orbit_easy'
