@@ -1,0 +1,57 @@
+# 🛰️ Adventure 01: Echoes Lost in Orbit
+
+Welcome to the first challenge in the **Open Ecosystem Challenge** series!  
+Your mission: restore interstellar communication by fixing a broken GitOps setup.  
+This is a hands-on troubleshooting exercise using **Kubernetes**, **Argo CD**, and **Kustomize**.
+
+The entire **infrastructure is pre-provisioned in your Codespace** — Kubernetes cluster, Argo CD, and sample app are
+ready to go.  
+**You don’t need to set up anything locally. Just focus on solving the problem.**
+
+## 🪐 The Backstory
+
+Welcome aboard the GitOps Starliner, a multi-species engineering vessel orbiting the vibrant planet of Polaris-9. Life
+in this quadrant is wonderfully diverse — from the whispering cloud-dwellers of Nebulon to the rhythmic click-speakers
+of Crustacea Prime.
+
+Communication between species used to be seamless, thanks to the Echo Server, a universal translator that instantly
+echoed your words in the listener's native format.
+
+But lately, something's off.
+
+Messages are getting scrambled. Some transmissions never arrive. The Echo Server, deployed across the Staging Moonbase
+and the Production Outpost, is no longer syncing properly. The Argo CD dashboard shows no active deployments, and
+telemetry is suspiciously quiet.
+
+**You've been assigned to restore interstellar communication before the next critical mission.**
+
+## 🎮 Choose Your Level
+
+Each level is a standalone challenge with its own Codespace that builds on the story while being technically
+independent — pick your difficulty and start wherever you feel comfortable!
+
+> 💡 Not sure which level to choose? [Learn more about difficulty levels](/#how-it-works)
+
+### 🟢 Easy: Broken Echoes
+
+**Status:** ✅ Available  
+**Topics:** ArgoCD ApplicationSets, GitOps fundamentals
+
+The Echo Server is misbehaving. Both environments seem to be down, and messages are silent. Your mission: investigate
+the ArgoCD configuration and restore proper multi-environment delivery.
+
+[**Start the Easy Challenge**](./easy.md){ .md-button .md-button--primary }
+
+---
+
+### 🟡 Medium: The Silent Canary
+
+**Status:** 🚧 Coming on December 1
+
+---
+
+### 🔴 Hard: Echoes in the Dark
+
+**Status:** 🚧 Coming on December 8
+
+
