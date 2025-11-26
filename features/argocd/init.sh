@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-showFlags() {
-  echo " --help         Display this help message"
-  echo " --show-flags   Shows available flags"
-  echo " --read-only    Disables the ArgoCD admin user and only provides read-only access"
-}
-
 help() {
   echo "Usage: $0 [OPTIONS]"
   echo "Options:"
-  showFlags
+  echo " --help         Display this help message"
+  echo " --read-only    Disables the ArgoCD admin user and only provides read-only access"
 }
 
 # Parse flags
@@ -20,10 +15,6 @@ for arg in "$@"; do
   case "$arg" in
     --help)
       help
-      exit 0
-      ;;
-    --show-flags)
-      showFlags
       exit 0
       ;;
     --read-only)

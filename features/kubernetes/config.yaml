@@ -9,3 +9,7 @@ nodes:
   - hostPort: 30100
     containerPort: 30100
     protocol: TCP
+    # Argo Rollouts Dashboard
+  - hostPort: 30101
+    containerPort: 30101
+    protocol: TCP
