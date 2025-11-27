@@ -4,6 +4,6 @@ set -e
 features/argo-rollouts/connect.sh
 
 #REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
-#sed -i "s|__REPO_URL__|${REPO_URL}|g" adventures/01-echoes-lost-in-orbit/beginner/manifests/appset.yaml
+#sed -i "s|__REPO_URL__|${REPO_URL}|g" adventures/01-echoes-lost-in-orbit/intermediate/manifests/appset.yaml
 #
-#kubectl apply -n argocd -f adventures/01-echoes-lost-in-orbit/beginne˚r/manifests/appset.yaml
+#kubectl apply -n argocd -f adventures/01-echoes-lost-in-orbit/intermediate/manifests/appset.yaml

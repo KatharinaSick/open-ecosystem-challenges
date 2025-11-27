@@ -15,7 +15,12 @@ curl -sS https://webi.sh/kubens@v0.9.5 | bash
 echo "✨ Installing k9s"
 curl -sS https://webinstall.dev/k9s@0.50.16 | bash
 
+echo "✨ Installing Helm"
+curl -sS https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
 echo "✨ Starting Kind cluster"
 kind create cluster --config features/kubernetes/config.yaml --wait 300s
 kubectl cluster-info
+
+echo "✅ Kubernetes cluster is ready"
 

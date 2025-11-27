@@ -16,7 +16,8 @@
   },
   "forwardPorts": [
     30100,
-    30101
+    30101,
+    30102
   ],
   "portsAttributes": {
     "30100": {
@@ -26,6 +27,10 @@
     "30101": {
       "label": "Argo Rollouts Dashboard",
       "onAutoForward": "notify"
+    },
+    "30102": {
+      "label": "Prometheus",
+      "onAutoForward": "ignore"
     }
   },
   "otherPortsAttributes": {

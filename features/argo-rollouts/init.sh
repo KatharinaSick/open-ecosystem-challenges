@@ -13,3 +13,5 @@ curl -LO https://github.com/argoproj/argo-rollouts/releases/download/v1.8.3/kube
 chmod +x ./kubectl-argo-rollouts-linux-amd64
 sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 
+echo "✅ Argo Rollouts is ready"
+

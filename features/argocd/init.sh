@@ -53,3 +53,6 @@ if [ "$read_only" = true ]; then
   kubectl -n argocd delete secret argocd-initial-admin-secret
   kubectl -n argocd rollout restart deployment/argocd-server
 fi
+
+echo "✅ Argo CD is ready"
+
