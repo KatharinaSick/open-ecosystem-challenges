@@ -16,7 +16,10 @@ echo "✨ Installing k9s"
 curl -sS https://webinstall.dev/k9s@0.50.16 | bash
 
 echo "✨ Installing Helm"
-curl -sS https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4
+chmod 700 get_helm.sh
+./get_helm.sh
+rm get_helm.sh
 
 echo "✨ Starting Kind cluster"
 kind create cluster --config features/kubernetes/config.yaml --wait 300s
