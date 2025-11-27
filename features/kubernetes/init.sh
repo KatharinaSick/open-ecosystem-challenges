@@ -16,10 +16,12 @@ echo "✨ Installing k9s"
 curl -sS https://webinstall.dev/k9s@0.50.16 | bash
 
 echo "✨ Installing Helm"
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4
-chmod 755 get_helm.sh
-./get_helm.sh
-rm get_helm.sh
+curl -LO "https://get.helm.sh/helm-v4.0.1-linux-amd64.tar.gz"
+tar -zxvf helm-v4.0.1-linux-amd64.tar.gz
+chmod +x linux-amd64/helm
+sudo mv linux-amd64/helm /usr/local/bin/helm
+rm linux-amd64 helm-v4.0.1-linux-amd64.tar
+
 
 echo "✨ Starting Kind cluster"
 kind create cluster --config features/kubernetes/config.yaml --wait 300s
