@@ -85,5 +85,5 @@ spec:
                   fieldRef:
                     fieldPath: metadata.name
         - setWeight: 100
-      autoPromotionEnabled: true
+#      autoPromotionEnabled: true
 
