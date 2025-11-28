@@ -41,6 +41,7 @@ spec:
               memory: 128Mi
   strategy:
     canary:
+      autoPromotionEnabled: true
       steps:
         - setWeight: 5
         - pause: {duration: 10s}
@@ -85,5 +86,3 @@ spec:
                   fieldRef:
                     fieldPath: metadata.name
         - setWeight: 100
-#      autoPromotionEnabled: true
-
