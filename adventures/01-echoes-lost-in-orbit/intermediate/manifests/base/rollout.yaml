@@ -41,7 +41,6 @@ spec:
               memory: 128Mi
   strategy:
     canary:
-      autoPromotionEnabled: true
       steps:
         - setWeight: 5
         - pause: {duration: 10s}
