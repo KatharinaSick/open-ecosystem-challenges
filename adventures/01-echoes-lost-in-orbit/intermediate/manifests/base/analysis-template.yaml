@@ -5,7 +5,6 @@ metadata:
 spec:
   args:
     - name: namespace
-    - name: rollout-name
   metrics:
     - name: container-restarts
       interval: 10s
@@ -18,9 +17,9 @@ spec:
           query: |
             sum(increase(kube_pod_container_status_restarts_total{
               namespace="{{args.namespace}}",
-              pod=~"{{args.rollout-name}}-.*"
+              pod=~"echo-server-.*"
             }[1m])) or vector(0)
-    - name: pods-ready
+    - name: containers-ready
       interval: 10s
       count: 3
       successCondition: result >= 1
@@ -29,9 +28,8 @@ spec:
         prometheus:
           address: http://prometheus-server.prometheus.svc.cluster.local
           query: |
-            sum(kube_pod_status_ready{
+            sum(kube_pod_container_status_ready{
               namespace="{{args.namespace}}",
-              pod=~"{{args.rollout-name}}-.*",
-              condition="true"
+              pod=~"echo-server-.*"
             })
 
