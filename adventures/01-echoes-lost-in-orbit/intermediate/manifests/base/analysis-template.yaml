@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: echo-analysis
+spec:
+  args:
+    - name: namespace
+    - name: rollout-name
+  metrics:
+    - name: container-restarts
+      interval: 10s
+      successCondition: result < 0.1
+      failureLimit: 3
+      provider:
+        prometheus:
+          address: http://prometheus-server.prometheus.svc.cluster.local
+          query: |
+            sum(rate(kube_pod_container_status_restarts_total{
+              namespace="{{args.namespace}}",
+              pod=~"{{args.rollout-name}}-.*"
+            }[2m])) or vector(0)
+    - name: pod-readiness
+      interval: 10s
+      successCondition: result >= 0.9
+      failureLimit: 3
+      provider:
+        prometheus:
+          address: http://prometheus-server.prometheus.svc.cluster.local
+          query: |
+            sum(kube_pod_status_ready{
+              namespace="{{args.namespace}}",
+              pod=~"{{args.rollout-name}}-.*",
+              condition="true"
+            }) / 
+            sum(kube_pod_status_ready{
+              namespace="{{args.namespace}}",
+              pod=~"{{args.rollout-name}}-.*"
+            })
+

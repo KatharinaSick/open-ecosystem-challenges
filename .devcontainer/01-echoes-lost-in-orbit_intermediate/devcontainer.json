@@ -30,7 +30,7 @@
     },
     "30102": {
       "label": "Prometheus",
-      "onAutoForward": "ignore"
+      "onAutoForward": "notify"
     }
   },
   "otherPortsAttributes": {

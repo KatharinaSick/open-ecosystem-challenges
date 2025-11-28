@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-features/argo-rollouts/connect.sh
+echo "✨ Starting level 2 - Intermediate"
 
-#REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
-#sed -i "s|__REPO_URL__|${REPO_URL}|g" adventures/01-echoes-lost-in-orbit/intermediate/manifests/appset.yaml
-#
-#kubectl apply -n argocd -f adventures/01-echoes-lost-in-orbit/intermediate/manifests/appset.yaml
+REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
+sed -i "s|__REPO_URL__|${REPO_URL}|g" adventures/01-echoes-lost-in-orbit/intermediate/manifests/appset.yaml
+
+kubectl apply -n argocd -f adventures/01-echoes-lost-in-orbit/intermediate/manifests/appset.yaml
+
+features/argo-rollouts/connect.sh
