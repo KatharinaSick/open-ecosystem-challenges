@@ -10,20 +10,20 @@ spec:
     - name: container-restarts
       interval: 10s
       count: 3
-      successCondition: result < 0.1
+      successCondition: result == 0
       failureLimit: 3
       provider:
         prometheus:
           address: http://prometheus-server.prometheus.svc.cluster.local
           query: |
-            sum(rate(kube_pod_container_status_restarts_total{
+            sum(increase(kube_pod_container_status_restarts_total{
               namespace="{{args.namespace}}",
               pod=~"{{args.rollout-name}}-.*"
-            }[2m])) or vector(0)
-    - name: pod-readiness
+            }[1m])) or vector(0)
+    - name: pods-ready
       interval: 10s
       count: 3
-      successCondition: result >= 0.9
+      successCondition: result >= 1
       failureLimit: 3
       provider:
         prometheus:
@@ -33,9 +33,5 @@ spec:
               namespace="{{args.namespace}}",
               pod=~"{{args.rollout-name}}-.*",
               condition="true"
-            }) / 
-            sum(kube_pod_status_ready{
-              namespace="{{args.namespace}}",
-              pod=~"{{args.rollout-name}}-.*"
             })
 
