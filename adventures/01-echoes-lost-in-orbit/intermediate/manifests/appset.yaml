@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: __REPO_URL__
-        revision: HEAD
+        revision: feature/adventure1-level2 # TODO change to HEAD
         directories:
           - path: adventures/01-echoes-lost-in-orbit/intermediate/manifests/overlays/*
   template:
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: __REPO_URL__
-        targetRevision: HEAD
+        targetRevision: feature/adventure1-level2 # TODO change to HEAD
         path: adventures/01-echoes-lost-in-orbit/intermediate/manifests/overlays/{{ path.basename }}
       destination:
         server: https://kubernetes.default.svc
