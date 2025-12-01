@@ -42,8 +42,7 @@ spec:
   strategy:
     canary:
       steps:
-        - setWeight: 5
-        - pause: {duration: 10s}
+        - setWeight: 33
         - analysis:
             templates:
               - templateName: echo-analysis
@@ -52,18 +51,7 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.namespace
-        - setWeight: 20
-        - pause: {duration: 10s}
-        - analysis:
-            templates:
-              - templateName: echo-analysis
-            args:
-              - name: namespace
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.namespace
-        - setWeight: 50
-        - pause: {duration: 10s}
+        - setWeight: 66
         - analysis:
             templates:
               - templateName: echo-analysis
