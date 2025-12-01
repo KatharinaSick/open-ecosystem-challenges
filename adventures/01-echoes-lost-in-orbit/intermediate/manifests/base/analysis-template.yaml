@@ -10,7 +10,7 @@ spec:
       successCondition: result > 0
       provider:
         prometheus:
-          address: http://prom-server.prometheus.svc.cluster.local
+          address: http://prometheus-server.prometheus.svc.cluster.local
           query: |
             sum(increase(kube_pod_container_status_restarts_total{
               namespace="{{args.namespace}}",
