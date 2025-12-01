@@ -9,6 +9,7 @@ spec:
     - name: container-restarts
       failureLimit: 1
       inconclusiveLimit: 1
+      consecutiveErrorLimit: 1
       count: 1
       successCondition: result[0] == 0
       provider:
@@ -22,6 +23,7 @@ spec:
     - name: ready-containers
       failureLimit: 1
       inconclusiveLimit: 1
+      consecutiveErrorLimit: 1
       count: 1
       successCondition: result[0] >= 1
       provider:
