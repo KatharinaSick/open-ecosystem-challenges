@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: __REPO_URL__
+        repoURL: https://github.com/KatharinaSick/open-ecosystem-challenges.git
         revision: feature/adventure1-level2 # TODO change to HEAD
         directories:
           - path: adventures/01-echoes-lost-in-orbit/intermediate/manifests/overlays/*
@@ -18,7 +18,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: __REPO_URL__
+        repoURL: https://github.com/KatharinaSick/open-ecosystem-challenges.git
         targetRevision: feature/adventure1-level2 # TODO change to HEAD
         path: adventures/01-echoes-lost-in-orbit/intermediate/manifests/overlays/{{ path.basename }}
       destination:
