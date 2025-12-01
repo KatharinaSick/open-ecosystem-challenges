@@ -20,8 +20,7 @@ curl -LO "https://get.helm.sh/helm-v4.0.1-linux-amd64.tar.gz"
 tar -zxvf helm-v4.0.1-linux-amd64.tar.gz
 chmod +x linux-amd64/helm
 sudo mv linux-amd64/helm /usr/local/bin/helm
-rm -rf linux-amd64 helm-v4.0.1-linux-amd64.tar
-
+rm -rf linux-amd64 helm-v4.0.1-linux-amd64.tar.gz
 
 echo "✨ Starting Kind cluster"
 kind create cluster --config features/kubernetes/config.yaml --wait 300s
