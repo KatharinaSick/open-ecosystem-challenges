@@ -9,7 +9,7 @@ spec:
     - name: container-restarts
       interval: 1s
       count: 3
-      successCondition: result[0] > 0
+      successCondition: result[0] == 0
       provider:
         prometheus:
           address: http://prometheus-server.prometheus.svc.cluster.local
