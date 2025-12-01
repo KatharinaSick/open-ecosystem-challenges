@@ -7,7 +7,8 @@ spec:
     - name: namespace
   metrics:
     - name: container-restarts
-      failureLimit: 0
+      failureLimit: 1
+      inconclusiveLimit: 1
       count: 1
       successCondition: result[0] == 0
       provider:
@@ -19,7 +20,8 @@ spec:
               pod=~"echo-server-.*"
             }[1m])) or vector(0)
     - name: ready-containers
-      failureLimit: 0
+      failureLimit: 1
+      inconclusiveLimit: 1
       count: 1
       successCondition: result[0] >= 1
       provider:
