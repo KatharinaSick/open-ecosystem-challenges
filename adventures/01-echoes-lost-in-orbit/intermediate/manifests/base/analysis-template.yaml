@@ -7,9 +7,9 @@ spec:
     - name: namespace
   metrics:
     - name: container-restarts
-      interval: 5s
+      interval: 2s
       count: 3
-      successCondition: result > 0
+      successCondition: result < 1
       failureLimit: 3
       provider:
         prometheus:
@@ -20,7 +20,7 @@ spec:
               pod=~"echo-server-.*"
             }[1m])) or vector(0)
     - name: ready-containers
-      interval: 5s
+      interval: 2s
       count: 3
       successCondition: result >= 1
       failureLimit: 3
