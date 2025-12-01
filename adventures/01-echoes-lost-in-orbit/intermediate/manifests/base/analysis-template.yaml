@@ -8,7 +8,7 @@ spec:
   metrics:
     - name: container-restarts
       failureLimit: 0
-      consecutiveSuccessLimit: 0
+      count: 1
       successCondition: result[0] == 0
       provider:
         prometheus:
@@ -19,8 +19,8 @@ spec:
               pod=~"echo-server-.*"
             }[1m])) or vector(0)
     - name: ready-containers
-      interval: 1s
-      count: 3
+      failureLimit: 0
+      count: 1
       successCondition: result[0] >= 1
       provider:
         prometheus:
