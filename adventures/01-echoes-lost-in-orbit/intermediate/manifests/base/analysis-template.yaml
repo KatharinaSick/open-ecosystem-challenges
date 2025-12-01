@@ -7,23 +7,17 @@ spec:
     - name: namespace
   metrics:
     - name: container-restarts
-      interval: 2s
-      count: 3
-      successCondition: result < 1
-      failureLimit: 3
+      successCondition: result > 0
       provider:
         prometheus:
-          address: http://prometheus-server.prometheus.svc.cluster.local
+          address: http://prom-server.prometheus.svc.cluster.local
           query: |
             sum(increase(kube_pod_container_status_restarts_total{
               namespace="{{args.namespace}}",
               pod=~"echo-server-.*"
             }[1m])) or vector(0)
     - name: ready-containers
-      interval: 2s
-      count: 3
       successCondition: result >= 1
-      failureLimit: 3
       provider:
         prometheus:
           address: http://prometheus-server.prometheus.svc.cluster.local
