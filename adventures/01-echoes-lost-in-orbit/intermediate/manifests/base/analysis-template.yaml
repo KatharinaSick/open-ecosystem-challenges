@@ -21,9 +21,9 @@ spec:
               pod=~"echo-server-.*"
             }[1m])) or vector(0)
     - name: ready-containers
-      failureLimit: 1
-      inconclusiveLimit: 1
-      consecutiveErrorLimit: 1
+      failureLimit: 0
+      inconclusiveLimit: 0
+      consecutiveErrorLimit: 0
       count: 1
       successCondition: result[0] >= 1
       provider:
