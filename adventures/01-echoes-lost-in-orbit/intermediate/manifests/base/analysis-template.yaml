@@ -7,25 +7,26 @@ spec:
     - name: namespace
   metrics:
     - name: container-restarts
+      successCondition: result[0] > 0
       failureLimit: 0
       inconclusiveLimit: 0
       consecutiveErrorLimit: 0
       count: 1
-      successCondition: result[0] == 0
       provider:
         prometheus:
-          address: http://prometheus-server.prometheus.svc.cluster.local
+          address: http://prom-server.prometheus.svc.cluster.local
           query: |
+            # There should be no pod restarts
             sum(increase(kube_pod_container_status_restarts_total{
               namespace="{{args.namespace}}",
               pod=~"echo-server-.*"
             }[1m])) or vector(0)
     - name: ready-containers
+      successCondition: result[0] >= 1
       failureLimit: 0
       inconclusiveLimit: 0
       consecutiveErrorLimit: 0
       count: 1
-      successCondition: result[0] >= 1
       provider:
         prometheus:
           address: http://prometheus-server.prometheus.svc.cluster.local
