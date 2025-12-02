@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: echo-server
-          image: registry.k8s.io/e2e-test-images/echoserver:2.5
+          image: registry.k8s.io/e2e-test-images/echoserver:2.4 # TODO update to 2.5 to load the Zephyrian language pack
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

@@ -7,14 +7,14 @@ spec:
     - name: namespace
   metrics:
     - name: container-restarts
-      successCondition: result[0] == 0
+      successCondition: result[0] > 0
       failureLimit: 0
       inconclusiveLimit: 0
       consecutiveErrorLimit: 0
       count: 1
       provider:
         prometheus:
-          address: http://prometheus-server.prometheus.svc.cluster.local
+          address: http://prom-server.prometheus.svc.cluster.local
           query: |
             # There should be no pod restarts
             sum(increase(kube_pod_container_status_restarts_total{
@@ -31,6 +31,8 @@ spec:
         prometheus:
           address: http://prometheus-server.prometheus.svc.cluster.local
           query: |
-            sum(kube_pod_container_status_ready{namespace="echo-prod", pod=~"echo-server-.*"}) or vector(0)
+            # Check how many containers are ready (should be at least 1)
+            # Look at kube_pod_container_status_* metrics
+            # Test in Prometheus UI (port 30102 in the "Ports" tab of VS Code)
 
 
