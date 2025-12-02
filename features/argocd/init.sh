@@ -47,16 +47,18 @@ if [ "$read_only" = true ]; then
     --account readonly \
     --current-password $admin_password \
     --new-password a-super-secure-password
+  argocd logout
 
   echo "✨ Disabling admin user for read-only mode"
   kubectl -n argocd patch configmap argocd-cm --type merge -p '{"data":{"accounts.admin.enabled":"false"}}'
   kubectl -n argocd delete secret argocd-initial-admin-secret
 
-  echo "✨ Restarting ArgoCD server"
+  echo "✨ Restarting Argo CD server"
   kubectl -n argocd rollout restart deployment/argocd-server
   kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
 
   echo "✨ Logging in as readonly user"
+  sleep 5 # Give Argo CD a moment to be ready after restart
   argocd login localhost:30100 --username readonly --password a-super-secure-password --plaintext
 fi
 
