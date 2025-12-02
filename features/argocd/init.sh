@@ -47,7 +47,6 @@ if [ "$read_only" = true ]; then
     --account readonly \
     --current-password $admin_password \
     --new-password a-super-secure-password
-  argocd logout
 
   echo "✨ Disabling admin user for read-only mode"
   kubectl -n argocd patch configmap argocd-cm --type merge -p '{"data":{"accounts.admin.enabled":"false"}}'
