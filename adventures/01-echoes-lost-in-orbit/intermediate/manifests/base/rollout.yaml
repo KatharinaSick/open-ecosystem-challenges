@@ -18,18 +18,18 @@ spec:
           image: stefanprodan/podinfo:6.9.3
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8080
+            - containerPort: 9898
               name: http
           readinessProbe:
             httpGet:
-              path: /healthz
-              port: 8080
+              path: /
+              port: 9898
             initialDelaySeconds: 2
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /healthz
-              port: 8080
+              path: /
+              port: 9898
             initialDelaySeconds: 5
             periodSeconds: 10
           resources:
