@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: echo-server
-          image: stefanprodan/podinfo:6.8.0
+          image: registry.k8s.io/e2e-test-images/echoserver:2.5
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

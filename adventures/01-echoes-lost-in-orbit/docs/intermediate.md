@@ -24,7 +24,7 @@ in the Open Ecosystem Community.
 
 By the end of this level, you should have:
 
-- Echo server **version 2.5** deployed successfully in both **staging** and **production** environments
+- Pod info **version 6.9.3** deployed successfully in both **staging** and **production** environments
 - Rollouts **automatically progress** through canary stages based on health metrics
 - Two **working PromQL queries** in the `AnalysisTemplate` that validate application health during releases
 - All rollouts complete successfully
@@ -145,7 +145,12 @@ argocd app get echo-server-staging --refresh
 argocd app get echo-server-prod --refresh
 ```
 
-TODO kubectl argo rollouts retry rollout echo-server -n echo-staging
+After ArgoCD syncs your changes, trigger the rollout:
+
+```bash
+kubectl argo rollouts retry rollout echo-server -n echo-staging
+kubectl argo rollouts retry rollout echo-server -n echo-prod
+```
 
 #### Monitor the Rollout
 
