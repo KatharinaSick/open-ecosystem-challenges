@@ -145,6 +145,8 @@ argocd app get echo-server-staging --refresh
 argocd app get echo-server-prod --refresh
 ```
 
+TODO kubectl argo rollouts retry rollout echo-server -n echo-staging
+
 #### Monitor the Rollout
 
 Watch the canary deployment progress in the [Argo Rollouts dashboard](#argo-rollouts-port-30101) or use the CLI:
