@@ -131,7 +131,7 @@ After making your fixes, commit and push them to trigger the deployment:
 ```bash
 git add adventures/01-echoes-lost-in-orbit/intermediate/manifests/
 git commit -m "Fix rollout configuration"
-git push origin main
+git push
 ```
 
 > 💡 **Tip:** If you're pushing to a branch other than `main`, make sure to also update the `ApplicationSet` in

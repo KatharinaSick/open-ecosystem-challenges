@@ -15,7 +15,7 @@ sleep 10
 sed -i 's|echoserver:2.4|echoserver:2.5|g' adventures/01-echoes-lost-in-orbit/intermediate/manifests/base/rollout.yaml
 git add adventures/01-echoes-lost-in-orbit/intermediate/manifests/base/rollout.yaml
 git commit -m "Update echo-server image to 2.5"
-git push origin main
+git push
 
 # Refresh ArgoCD to pick up the new commit
 argocd app get echo-server-staging --refresh
