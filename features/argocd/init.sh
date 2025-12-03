@@ -38,6 +38,8 @@ rm argocd-linux-amd64
 
 echo "✨ Waiting for Argo CD server to be ready"
 kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
+sleep 3 # Give Argo CD a moment to be ready after restart
+
 
 if [ "$read_only" = true ]; then
   echo "✨ Setting password for user readonly"
@@ -55,9 +57,9 @@ if [ "$read_only" = true ]; then
   echo "✨ Restarting Argo CD server"
   kubectl -n argocd rollout restart deployment/argocd-server
   kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
+  sleep 3 # Give Argo CD a moment to be ready after restart
 
   echo "✨ Logging in as readonly user"
-  sleep 5 # Give Argo CD a moment to be ready after restart
   argocd login localhost:30100 --username readonly --password a-super-secure-password --plaintext
 fi
 
