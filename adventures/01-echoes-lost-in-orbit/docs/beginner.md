@@ -68,7 +68,7 @@ Your Codespace comes pre-configured with the following tools to help you solve t
 - Open the **Ports** tab in the bottom panel
 - Find the Argo CD row (port `30100`) and click the forwarded address
 
-  ![Ports](./images/ports.png)
+  ![Ports](./images/ports-beginner.png)
 
 - Log in using:
   ```
