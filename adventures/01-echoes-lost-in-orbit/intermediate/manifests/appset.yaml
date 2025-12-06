@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: __REPO_URL__
-        revision: HEAD
+        revision: intermediate-test
         directories:
           - path: adventures/01-echoes-lost-in-orbit/intermediate/manifests/overlays/*
   template:
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: __REPO_URL__
-        targetRevision: HEAD
+        targetRevision: intermediate-test
         path: adventures/01-echoes-lost-in-orbit/intermediate/manifests/overlays/{{ path.basename }}
       destination:
         server: https://kubernetes.default.svc
