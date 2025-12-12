@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: echo-server
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/KatharinaSick/open-ecosystem-challenges.git
+        revision: feature/01-echoes-lost-in-orbit_expert
+        directories:
+          - path: adventures/01-echoes-lost-in-orbit/expert/manifests/overlays/*
+  template:
+    metadata:
+      name: echo-server-{{ path.basename}}
+      labels:
+        app.kubernetes.io/managed-by: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/KatharinaSick/open-ecosystem-challenges.git
+        targetRevision: feature/01-echoes-lost-in-orbit_expert
+        path: adventures/01-echoes-lost-in-orbit/expert/manifests/overlays/{{ path.basename }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: echo-{{ path.basename }}
+      syncPolicy:
+        automated:
+          enabled: true
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
