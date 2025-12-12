@@ -17,28 +17,26 @@ spec:
         - name: hotrod
           image: jaegertracing/example-hotrod:1.76.0
           imagePullPolicy: IfNotPresent
+          args: ["all"]
+          env:
+            - name: JAEGER_AGENT_HOST
+              value: localhost
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
           ports:
-            - containerPort: 9898
-              name: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 9898
-            initialDelaySeconds: 2
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 9898
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            - containerPort: 8080
+              name: frontend
+            - containerPort: 8081
+              name: customer
+            - containerPort: 8083
+              name: route
           resources:
-            requests:
-              cpu: 10m
-              memory: 32Mi
             limits:
               cpu: 100m
-              memory: 128Mi
+              memory: 100M
+            requests:
+              cpu: 100m
+              memory: 100M
   strategy:
     canary:
       steps:

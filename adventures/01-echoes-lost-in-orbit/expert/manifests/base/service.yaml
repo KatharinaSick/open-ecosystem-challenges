@@ -6,6 +6,6 @@ spec:
   selector:
     app: hotrod
   ports:
-    - name: http
-      port: 80
-      targetPort: 9898
+    - name: frontend
+      port: 8080
+      protocol: TCP
