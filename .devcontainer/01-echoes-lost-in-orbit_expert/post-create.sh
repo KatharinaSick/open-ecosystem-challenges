@@ -6,3 +6,4 @@ features/kubernetes/init.sh
 features/argocd/init.sh --read-only
 features/argo-rollouts/init.sh
 features/prometheus/init.sh
+features/jaeger/init.sh
