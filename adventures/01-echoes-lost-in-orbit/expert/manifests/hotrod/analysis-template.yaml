@@ -7,6 +7,23 @@ spec:
     - name: namespace
     - name: canary-hash
   metrics:
+    - name: traffic
+      initialDelay: 60s
+      interval: 10s
+      count: 3
+      successCondition: result[0] >= 0.05
+      failureLimit: 2
+      inconclusiveLimit: 3
+      consecutiveErrorLimit: 2
+      provider:
+        prometheus:
+          address: http://prometheus-server.prometheus.svc.cluster.local
+          query: |
+            # Request throughput: requests per second to detect dark canaries
+            sum(rate(hotrod_requests_total{
+              rollouts_pod_template_hash="{{args.canary-hash}}"
+              namespace="{{args.namespace}}",
+            }[2m]))
     - name: error-rate-lt-5-percent
       initialDelay: 60s
       interval: 10s

@@ -7,6 +7,12 @@ metadata:
 data:
   collector-config.yaml: |
     receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
 
     connectors:
       spanmetrics:
@@ -16,6 +22,8 @@ data:
           - name: hotrod.pod.hash
 
     exporters:
+      prometheus:
+        endpoint: "0.0.0.0:8889"
       debug:
         verbosity: detailed
       otlp:
@@ -30,6 +38,9 @@ data:
     service:
       extensions: [health_check]
       pipelines:
+        metrics:
+          receivers: [spanmetrics]
+          exporters: [prometheus]
         traces:
           receivers: [otlp]
           exporters: [debug, otlp, spanmetrics]
