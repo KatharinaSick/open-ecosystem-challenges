@@ -39,6 +39,9 @@ provider "google" {
   project = "cloudhaven-infrastructure"
   region  = "europe-west1"
 
+  # Technically, this wouldn't be necessary because we're also setting the
+  # `STORAGE_EMULATOR_HOST` variable during setup but this makes things more
+  # explicit.
   storage_custom_endpoint = "http://localhost:30104/storage/v1/"
   sql_custom_endpoint     = "http://localhost:30104/"
 
