@@ -57,10 +57,6 @@ resource "google_storage_bucket" "vault" {
     managed-by  = "opentofu"
     environment = "cloudhaven"
   }
-
-  lifecycle {
-    enabled = each.value.enabled
-  }
 }
 
 # ----------------------------------------------------------------------------
@@ -121,9 +117,5 @@ resource "google_sql_database_instance" "ledger" {
   }
 
   deletion_protection = true
-
-  lifecycle {
-    enabled = each.value.enabled
-  }
 }
 

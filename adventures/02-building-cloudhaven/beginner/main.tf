@@ -12,7 +12,7 @@ terraform {
 
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "7.15.0"
     }
   }
@@ -24,9 +24,9 @@ terraform {
   # collaboration between guild members. This prevents state conflicts and
   # provides a shared source of truth for infrastructure state.
   # ---------------------------------------------------------------------------
-#   backend "gcs" {
-#     bucket = "cloudhaven-tfstate"
-#   }
+  backend "gcs" {
+    bucket = "cloudhaven-tfstate"
+  }
 }
 
 # -----------------------------------------------------------------------------
@@ -39,10 +39,10 @@ provider "google" {
   project = "cloudhaven-infrastructure"
   region  = "europe-west1"
 
-  storage_custom_endpoint         = "http://localhost:8080/storage/v1/"
-  sql_custom_endpoint             = "http://localhost:8080/"
+  storage_custom_endpoint = "http://localhost:30104/storage/v1/"
+  sql_custom_endpoint     = "http://localhost:30104/"
 
   # Skip authentication since we're using a mock API
-  # access_token                    = "mock-token"
+  access_token = "a-super-secure-token"
 }
 
