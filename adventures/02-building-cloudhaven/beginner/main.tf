@@ -24,9 +24,9 @@ terraform {
   # collaboration between guild members. This prevents state conflicts and
   # provides a shared source of truth for infrastructure state.
   # ---------------------------------------------------------------------------
-  backend "gcs" {
-    bucket = "cloudhaven-tfstate"
-  }
+  # backend "gcs" {
+  #   bucket = "cloudhaven-tfstate"
+  # }
 }
 
 # -----------------------------------------------------------------------------
