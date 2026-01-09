@@ -2,7 +2,7 @@
 set -e
 
 echo "✨ Starting the GCP API Mock"
-docker run -d -p 30104:8080 ghcr.io/katharinasick/gcp-api-mock:v1.0.1
+docker run -d -p 30104:8080 ghcr.io/katharinasick/gcp-api-mock:v1.1.0
 
 # Set environment variable to redirect GCS backend requests to the mock
 echo 'export STORAGE_EMULATOR_HOST="http://localhost:30104"' >> ~/.bashrc
