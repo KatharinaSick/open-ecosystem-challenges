@@ -1,7 +1,7 @@
-# 🟢 Beginner: Broken Echoes
+# 🟢 Beginner: The Foundation Stones
 
-The Echo Server is misbehaving. Both environments seem to be down, and messages are silent. Your mission: investigate
-the ArgoCD configuration and restore proper multi-environment delivery.
+The Merchant's Quarter needs essential services, but the previous engineer left the OpenTofu configuration incomplete.
+Your mission: Complete the setup and establish proper infrastructure management.
 
 ## ⏰ Deadline
 
@@ -9,47 +9,37 @@ Wednesday, 10 December 2025 at 09:00 CET
 > ℹ️ You can still complete the challenge after this date, but points will only be awarded for submissions before the
 > deadline.
 
-## 📝 Solution Walkthrough
-
-> ⚠️ **Spoiler Alert:** The following walkthrough contains the full solution to the challenge. We encourage you to try solving it on your own first. Consider coming back here only if you get stuck or want to check your approach.
-
-Need help restoring multi-environment delivery? Follow the [step-by-step beginner solution walkthrough](./solutions/beginner.md) to learn how to:
-
-- Investigate the Argo CD ApplicationSet and spot common pitfalls
-- Adjust the Argo CD ApplicationSet to meet the challenge objective
-- Understand the reasoning behind each change, not just the commands
-
-The guide is written to explain not just what to do, but why. Dive in and level up your GitOps skills!
-
 ## 💬 Join the discussion
 
 Share your solutions and questions in
-the [challenge thread](https://community.open-ecosystem.com/t/adventure-01-echoes-lost-in-orbit-easy-broken-echoes/117)
+the [challenge thread](TODO)
 in the Open Ecosystem Community.
 
 ## 🎯 Objective
 
 By the end of this level, you should:
 
-- See **two distinct Applications** in the Argo CD dashboard (one per environment)
-- Ensure each Application deploys to its **own isolated namespace**
-- **Make the system resilient** so Argo CD automatically reverts manual changes made to the cluster
-- Confirm that **updates happen automatically** without leaving stale resources behind
+- Successfully run `tofu init`, `tofu plan`, and `tofu apply`
+- Provision **storage vaults** (buckets) and **ledger databases** for the Merchant's Quarter districts
+- Configure a **remote state backend** to enable team collaboration
+- Understand how **`for_each`** loops work to provision multiple resources
+- Use the **`enabled`** meta-argument to conditionally create resources
+- View infrastructure details through **outputs**
 
 ## 🧠 What You'll Learn
 
-- How Argo CD ApplicationSets work
-- How to reason about templating and sync policies
-- How drift detection and self-healing operate in GitOps workflows
+- OpenTofu/Terraform basics (init, plan, apply workflow)
+- Remote state backends for team collaboration
+- Resource loops with `for_each`
+- The new `enabled` meta-argument (OpenTofu 1.11+)
+- Outputs for sharing resource information
 
 ## 🧰 Toolbox
 
 Your Codespace comes pre-configured with the following tools to help you solve the challenge:
 
-- [`kubectl`](https://kubernetes.io/docs/reference/kubectl/): The Kubernetes command-line tool for interacting with
-  the cluster
-- [`kubens`](https://github.com/ahmetb/kubectx): Fast way to switch between Kubernetes namespaces
-- [`k9s`](https://k9scli.io/): A terminal-based UI to interact with your Kubernetes clusters
+- [`tofu`](https://opentofu.org/): The OpenTofu CLI for infrastructure provisioning
+- A **mock GCP API** running locally to simulate cloud resources without real cloud costs
 
 ## ✅ How to Play
 
@@ -62,77 +52,51 @@ Your Codespace comes pre-configured with the following tools to help you solve t
 
 - From your fork, click the green **Code** button → **Codespaces hamburger menu** → **New with options**.
   ![Create a new Codespace](./images/new-codespace.png)
-- Select the **Adventure 01 | 🟢 Beginner (Broken Echoes)** configuration.
+- Select the **Adventure 02 | 🟢 Beginner (The Foundation Stones)** configuration.
   ![Codespace options](./images/codespace-options.png)
 
 > ⚠️ **Important:** The challenge will not work if you choose another configuration (or the default).
 
-### 3. Wait for Infrastructure to Deploy
+### 3. Wait for Environment to Initialize
 
-- Your Codespace will automatically provision a Kubernetes cluster, Argo CD, and the sample app. This usually takes
-  around 5 minutes.
+- Your Codespace will automatically set up OpenTofu and start the mock GCP API. This usually takes around 2 minutes.
 
 > 💡 **Tip:** To check the progress press `Cmd + Shift + P` (or `Ctrl + Shift + P` on Windows/Linux) and search for
 `View Creation Log` (available after a few moments once the Codespace has initialized).
 
-### 4. Access the Argo CD Dashboard
+### 4. Navigate to the Infrastructure Directory
 
-- Open the **Ports** tab in the bottom panel
-- Find the Argo CD row (port `30100`) and click the forwarded address
+```bash
+cd adventures/02-building-cloudhaven/beginner/infra
+```
 
-  ![Ports](./images/ports-beginner.png)
+### 5. Explore and Complete the Configuration
 
-- Log in using:
+- Review the existing OpenTofu files:
+  - `main.tf` - Provider and backend configuration
+  - `variables.tf` - District definitions
+  - `merchants.tf` - Resource definitions for vaults and ledgers
+  - `outputs.tf` - Infrastructure outputs
+- Run the OpenTofu workflow:
+  ```bash
+  tofu init
+  tofu plan
+  tofu apply
   ```
-  Username: readonly
-  Password: a-super-secure-password
-  ```
-
-### 5. Fix the Configuration
-
-- All errors are located in this ApplicationSet:
-  ```
-  adventures/01-echoes-lost-in-orbit/beginner/manifests/appset.yaml
-  ```
-- Learn more about [ApplicationSets](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/) and
-  the [Application Specification](https://argo-cd.readthedocs.io/en/stable/user-guide/application-specification/) in
-  the [ArgoCD docs](https://argo-cd.readthedocs.io/en/stable/user-guide/application-specification/).
-
-> 📦 **About Kustomize:** This challenge uses [Kustomize](https://kustomize.io/) under the hood to manage Kubernetes
-> manifests. Kustomize allows us to maintain a **base** set of manifests (deployment, service) and apply
-> environment-specific customizations through **overlays** (staging, prod). Each overlay can modify the base
-> configuration—like changing replica counts or namespaces—without duplicating YAML. Argo CD automatically detects and
-> applies these Kustomize configurations, so you don't need to run Kustomize commands manually. Your focus is on fixing
-> the ApplicationSet to properly reference these Kustomize-managed paths.
-
-- After making changes, apply them:
-  ```
-  kubectl apply -n argocd -f adventures/01-echoes-lost-in-orbit/beginner/manifests/appset.yaml
-  ```
-  (Run from the repo root)
 
 ### 6. Verify Your Solution
 
-Once you think you've solved the challenge, it's time to verify!
-
-#### Run the Smoke Test
-
-Run the provided smoke test script from the repo root:
+Run the smoke test to validate your solution:
 
 ```bash
-adventures/01-echoes-lost-in-orbit/beginner/smoke-test.sh
+./smoke-test.sh
 ```
 
-If the test passes, your solution is very likely correct! 🎉
+## 📚 Resources
 
-#### Complete Full Verification
-
-For comprehensive validation and to officially claim completion:
-
-1. **Commit and push your changes** to your fork
-2. **Manually trigger the verification workflow** on GitHub Actions
-3. **Share your success** with
-   the [community](https://community.open-ecosystem.com/t/adventure-01-echoes-lost-in-orbit-easy-broken-echoes/117)
-
-> 📖 **Need detailed verification instructions?** Check out the [Verification Guide](../../verification) for
-> step-by-step instructions on both smoke tests and GitHub Actions workflows.
+- [OpenTofu Documentation](https://opentofu.org/docs/)
+- [OpenTofu `enabled` meta-argument](https://opentofu.org/docs/v1.11/language/meta-arguments/enabled/)
+- [OpenTofu `for_each` meta-argument](https://opentofu.org/docs/language/meta-arguments/for_each/)
+- [OpenTofu Backends](https://opentofu.org/docs/language/settings/backends/configuration/)
+- [Google Cloud Storage Bucket Resource](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket)
+- [Google Cloud SQL Instance Resource](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance)

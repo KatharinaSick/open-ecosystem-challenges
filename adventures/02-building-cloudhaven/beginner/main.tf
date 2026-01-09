@@ -24,23 +24,23 @@ terraform {
   # collaboration between guild members. This prevents state conflicts and
   # provides a shared source of truth for infrastructure state.
   # ---------------------------------------------------------------------------
-  backend "gcs" {
-    bucket = "cloudhaven-tfstate"
-  }
+#   backend "gcs" {
+#     bucket = "cloudhaven-tfstate"
+#   }
 }
 
 # -----------------------------------------------------------------------------
 # Google Cloud Provider
 # -----------------------------------------------------------------------------
 # Configured to use the CloudHaven mock GCP API for local development.
-# In real life, this would point to actual GCP endpoints.
+# In real life, this would be omitted to point to actual GCP endpoints.
 # -----------------------------------------------------------------------------
 provider "google" {
   project = "cloudhaven-infrastructure"
   region  = "europe-west1"
 
-  storage_custom_endpoint         = "http://localhost:30104/storage/v1/"
-  # sql_custom_endpoint             = "http://localhost:30104/sql/v1beta4/"
+  storage_custom_endpoint         = "http://localhost:8080/storage/v1/"
+  sql_custom_endpoint             = "http://localhost:8080/"
 
   # Skip authentication since we're using a mock API
   # access_token                    = "mock-token"
