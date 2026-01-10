@@ -54,17 +54,3 @@ resource "google_storage_bucket" "tfstate" {
     managed_by  = "opentofu"
   }
 }
-
-# Create an empty state file to enable state migration
-# This is required because a bug in the gcp-api-mock (sorry!)
-resource "google_storage_bucket_object" "tfstate_init" {
-  name         = "default.tfstate"
-  bucket       = google_storage_bucket.tfstate.name
-  content      = jsonencode({})
-  content_type = "application/json"
-
-  lifecycle {
-    ignore_changes = all
-  }
-}
-
