@@ -1,0 +1,38 @@
+{
+  "name": "\uD83C\uDF06 Adventure 02 | \uD83D\uDD34 Expert (TODO)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/02-building-cloudhaven/expert",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    }
+  },
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_expert/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_expert/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "OpenTofu.vscode-opentofu",
+        "fabiospampinato.vscode-todo-plus",
+        "github.vscode-github-actions",
+        "SanjulaGanepola.github-local-actions"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/02-building-cloudhaven/README.md"
+      ]
+    }
+  },
+  "forwardPorts": [
+    30104
+  ],
+  "portsAttributes": {
+    "30104": {
+      "label": "GCP API Mock",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}
