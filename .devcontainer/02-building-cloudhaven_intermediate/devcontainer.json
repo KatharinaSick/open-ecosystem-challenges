@@ -3,8 +3,8 @@
   "image": "mcr.microsoft.com/devcontainers/base:bullseye",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/02-building-cloudhaven/intermediate",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
-    }
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_intermediate/post-create.sh",
   "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_intermediate/post-start.sh",
