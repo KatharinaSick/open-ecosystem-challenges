@@ -1,5 +1,4 @@
 {
-  "action": "workflow_dispatch",
   "inputs": {
     "gcs_endpoint": "http://localhost:30104"
   }

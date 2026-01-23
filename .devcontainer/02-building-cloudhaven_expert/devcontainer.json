@@ -14,7 +14,8 @@
         "OpenTofu.vscode-opentofu",
         "fabiospampinato.vscode-todo-plus",
         "github.vscode-github-actions",
-        "SanjulaGanepola.github-local-actions"
+        "SanjulaGanepola.github-local-actions",
+        "ms-vscode.makefile-tools"
       ]
     },
     "codespaces": {

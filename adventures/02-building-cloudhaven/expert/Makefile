@@ -20,6 +20,9 @@ help:
 	@echo "  make plan              - Run tofu plan to preview changes"
 	@echo "  make apply             - Apply infrastructure changes"
 	@echo ""
+	@echo "GitHub Workflows:"
+	@echo "  make drift-check-local - Test drift detection workflow locally with act"
+	@echo ""
 	@echo "Cleanup:"
 	@echo "  make clean             - Remove .terraform directories and lock files"
 
@@ -61,6 +64,15 @@ plan:
 apply:
 	@echo "🚀 Applying infrastructure changes..."
 	@tofu apply
+
+# ----------------------------------------------------------------------------
+# GitHub Workflow Targets
+# ----------------------------------------------------------------------------
+
+# Test drift detection workflow locally with nektos/act
+drift-check-local:
+	@echo "🔍 Running drift detection workflow locally with nektos/act..."
+	@gh act workflow_dispatch -e .github/sample-events/trigger-drift-detection.json -P ubuntu-latest=catthehacker/ubuntu:act-latest
 
 # ----------------------------------------------------------------------------
 # Cleanup Targets
