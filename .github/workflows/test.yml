@@ -1,0 +1,54 @@
+name: 🔍 Drift Detection
+
+on:
+  # In production, you'd typically run this on a schedule:
+  # schedule:
+  #   - cron: '0 */n * * *'  # Every n hours
+
+  # For this challenge, we use manual trigger
+  workflow_dispatch:
+    inputs:
+      gcs_endpoint:
+        description: 'GCS Backend Endpoint (Codespace forwarded URL for port 30104)'
+        required: true
+        type: string
+
+# Ensure only one drift detection runs at a time
+concurrency:
+  group: drift-detection
+  cancel-in-progress: false
+
+jobs:
+  detect-drift:
+    name: Detect Infrastructure Drift
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      # ----------------------------------------------------------------------
+      # Setup
+      # ----------------------------------------------------------------------
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: "1.11.2"
+
+      # ----------------------------------------------------------------------
+      # Initialize and Plan
+      # ----------------------------------------------------------------------
+      - name: 📦 Initialize OpenTofu
+        working-directory: ${{ env.WORKING_DIR }}
+        run: tofu init
+
+      - name: 🔍 Check for drift
+        id: plan
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          echo "hello world"
+          echo "${{ inputs.gcs_endpoint }}"

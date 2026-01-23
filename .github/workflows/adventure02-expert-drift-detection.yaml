@@ -31,7 +31,7 @@ name: 🔍 Drift Detection
 on:
   # In production, you'd typically run this on a schedule:
   # schedule:
-  #   - cron: '0 */6 * * *'  # Every 6 hours
+  #   - cron: '0 */n * * *'  # Every n hours
 
   # For this challenge, we use manual trigger
   workflow_dispatch:
@@ -49,7 +49,7 @@ concurrency:
 env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
   # This is only needed because we're using a mock GCS backend.
-  # In production, you'd remove this and use real GCP credentials instead.
+  # In production, you'd remove this
   STORAGE_EMULATOR_HOST: ${{ inputs.gcs_endpoint }}
 
 jobs:
