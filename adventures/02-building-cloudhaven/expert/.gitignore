@@ -13,3 +13,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 .terraform.lock.hcl
+
+# Act Local Workflow Files
+.act/
