@@ -1,0 +1,18 @@
+{
+  "pull_request": {
+    "number": 999,
+    "head": {
+      "ref": "feature/local-test",
+      "sha": "abc123"
+    },
+    "base": {
+      "ref": "main"
+    },
+    "title": "[Local Test] Validate & Plan",
+    "body": "This is a mocked PR event for local testing with act."
+  },
+  "repository": {
+    "name": "open-ecosystem-challenges",
+    "full_name": "ksick/open-ecosystem-challenges"
+  }
+}
