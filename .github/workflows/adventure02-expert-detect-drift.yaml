@@ -11,8 +11,8 @@ env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
   # This is only needed because we're using a mock GCS backend.
   # In production, you'd remove this.
-  # __STORAGE_EMULATOR_HOST__ is replaced by post-start.sh
-  STORAGE_EMULATOR_HOST: "__STORAGE_EMULATOR_HOST__"
+  # https://solid-halibut-v45654vw473jw4-30104.app.github.dev is replaced by post-start.sh
+  STORAGE_EMULATOR_HOST: "https://solid-halibut-v45654vw473jw4-30104.app.github.dev"
 
 jobs:
   detect-drift:
