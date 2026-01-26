@@ -19,7 +19,10 @@
     "codespaces": {
       "openFiles": [
         "adventures/02-building-cloudhaven/README.md"
-      ]
+      ],
+      "permissions": {
+        "codespaces": "write"
+      }
     }
   },
   "forwardPorts": [
