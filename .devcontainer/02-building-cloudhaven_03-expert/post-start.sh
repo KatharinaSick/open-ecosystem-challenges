@@ -11,7 +11,7 @@ GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDIN
 
 # Make port 30104 public so GitHub Actions can access it
 echo "🌐 Making GCP API Mock port public..."
-gh codespace ports visibility 30104:public -c "$CODESPACE_NAME"
+GITHUB_TOKEN="$GH_TOKEN" gh codespace ports visibility 30104:public -c "$CODESPACE_NAME"
 
 # Replace placeholders in workflow files with the actual Codespace URL
 echo "📝 Configuring workflow files..."
