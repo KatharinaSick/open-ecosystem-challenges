@@ -50,12 +50,8 @@ jobs:
           set +e
           tofu plan -detailed-exitcode -out=tfplan
           EXIT_CODE=$?
-          echo "exitcode=$EXIT_CODE" >> $GITHUB_OUTPUT
-
-      - name: 🔍 Check if infrastructure has drifted
-        id: check-drift
-        run: |
-          EXIT_CODE="${{ steps.plan.outputs.exitcode }}"
+          set -e
+          
           if [ "$EXIT_CODE" == "2" ]; then
             echo "⚠️ Drift detected!"
             echo "drift=true" >> $GITHUB_OUTPUT
@@ -71,7 +67,7 @@ jobs:
       # Generate Drift Log Entry (only if drift detected)
       # ----------------------------------------------------------------------
       - name: 📝 Create drift log entry
-        if: steps.check-drift.outputs.drift == 'true'
+        if: steps.plan.outputs.drift == 'true'
         working-directory: ${{ env.WORKING_DIR }}
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -104,7 +100,7 @@ jobs:
       # Create PR (if drift detected)
       # ----------------------------------------------------------------------
       - name: 🔀 Create Pull Request
-        if: steps.check-drift.outputs.drift == 'true'
+        if: steps.plan.outputs.drift == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -136,7 +132,7 @@ jobs:
         run: |
           echo "## Drift Detection Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.check-drift.outputs.drift }}" == "false" ]; then
+          if [ "${{ steps.plan.outputs.drift }}" == "false" ]; then
             echo "✅ **No drift detected** - Infrastructure matches desired state" >> $GITHUB_STEP_SUMMARY
           else
             echo "🚨 **Drift detected** - A PR has been created to reconcile" >> $GITHUB_STEP_SUMMARY
