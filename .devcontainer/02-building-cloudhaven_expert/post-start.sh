@@ -12,13 +12,14 @@ GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDIN
 # Replace placeholders in workflow files with the actual Codespace URL
 echo "📝 Configuring workflow files..."
 sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
-  "$CHALLENGE_DIR/.github/workflows/validate-and-plan.yaml" \
-  "$CHALLENGE_DIR/.github/workflows/drift-detection.yaml" \
-  "$CHALLENGE_DIR/.github/workflows/apply.yaml"
+  "$REPO_ROOT/.github/workflows/adventure02-expert-validate-and-plan.yaml" \
+  "$REPO_ROOT/.github/workflows/adventure02-expert-drift-detection.yaml" \
+  "$REPO_ROOT/.github/workflows/adventure02-expert-apply.yaml"
 
 # Commit and push the workflow changes so they're available on GitHub
 echo "🚀 Pushing workflow configuration..."
-git add "$CHALLENGE_DIR/.github/workflows/"
+cd "$REPO_ROOT"
+git add .github/workflows/adventure02-expert-*.yaml
 git commit -m "chore: configure workflows for Codespace" --allow-empty
 git push
 

@@ -1,7 +1,6 @@
 {
-  "name": "\uD83C\uDF06 Adventure 02 | \uD83D\uDD34 Expert (TODO)",
+  "name": "🌆 Adventure 02 | 🔴 Expert (TODO)",
   "image": "mcr.microsoft.com/devcontainers/base:bullseye",
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/02-building-cloudhaven/expert",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
     }

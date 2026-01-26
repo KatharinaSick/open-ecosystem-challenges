@@ -2,10 +2,6 @@
 # Drift Detection Workflow
 # ============================================================================
 # Detects infrastructure drift and creates a PR to reconcile.
-#
-# NOTE: This file is symlinked from:
-#   adventures/02-building-cloudhaven/expert/.github/workflows/drift-detection.yaml
-# You can edit either file - they point to the same location.
 # ============================================================================
 
 name: 🔍 Drift Detection
@@ -39,7 +35,6 @@ jobs:
       contents: write
       pull-requests: write
 
-
     steps:
       # ----------------------------------------------------------------------
       # Setup
@@ -65,6 +60,7 @@ jobs:
         run: |
           set +e
           tofu plan -detailed-exitcode -out=tfplan
+          echo "exitcode=$?" >> $GITHUB_OUTPUT
 
       - name: 🔍 Check if infrastructure has drifted
         id: check-drift
@@ -80,7 +76,6 @@ jobs:
             echo "❌ Plan failed with exit code $EXIT_CODE"
             exit 1
           fi
-
 
       # ----------------------------------------------------------------------
       # Generate Drift Log Entry (only if drift detected)
@@ -116,7 +111,7 @@ jobs:
           } > "$FILENAME"
 
       # ----------------------------------------------------------------------
-      # Create PR (if drift detected and not running locally)
+      # Create PR (if drift detected)
       # ----------------------------------------------------------------------
       - name: 🔀 Create Pull Request
         if: steps.check-drift.outputs.drift == 'true'
@@ -145,7 +140,7 @@ jobs:
             automated
 
       # ----------------------------------------------------------------------
-      # Summary (GitHub Actions only)
+      # Summary
       # ----------------------------------------------------------------------
       - name: 📝 Job Summary
         run: |
