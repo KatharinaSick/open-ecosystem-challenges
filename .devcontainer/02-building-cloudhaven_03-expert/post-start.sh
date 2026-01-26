@@ -12,8 +12,8 @@ GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDIN
 # Replace placeholders in workflow files with the actual Codespace URL
 echo "📝 Configuring workflow files..."
 sed -i "s|__GCP_MOCK_ENDPOINT__|${GCS_MOCK_URL}|g" \
-  "$REPO_ROOT/.github/workflows/adventure02-expert-detect-drift.yaml"
-  # TODO others
+  "$REPO_ROOT/.github/workflows/adventure02-expert-detect-drift.yaml" \
+  "$REPO_ROOT/.github/workflows/adventure02-expert-validate-and-plan.yaml"
 
 # Replace GCP mock endpoint placeholders in Terraform files
 echo "📝 Configuring Terraform files..."

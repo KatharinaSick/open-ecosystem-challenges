@@ -1,3 +1,10 @@
+# ============================================================================
+# Infrastructure Drift Detection Workflow
+# ============================================================================
+# Detects infrastructure drift by running tofu plan and creates a PR if
+# drift is found.
+# ============================================================================
+
 name: 🌆🔴 | 🔍 Detect Infrastructure Drift (Adventure 02 - Expert)
 on:
   workflow_dispatch:
@@ -34,7 +41,7 @@ jobs:
       - name: 🔧 Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
         with:
-          tofu_version: "1.11.2"
+          tofu_version: 1.11.2
           tofu_wrapper: false
 
       # ----------------------------------------------------------------------
@@ -47,7 +54,6 @@ jobs:
       - name: 📝 Run OpenTofu Plan
         id: plan
         working-directory: ${{ env.WORKING_DIR }}
-        shell: bash {0}
         run: |
           tofu plan -detailed-exitcode -out=tfplan
           EXIT_CODE=$?

@@ -1,0 +1,112 @@
+# ============================================================================
+# OpenTofu Validation Workflow
+# ============================================================================
+# Runs on pull requests to validate OpenTofu changes.
+# ============================================================================
+
+name: 🌆🔴 | 🧐 Validate and Plan Infrastructure (Adventure 02 - Expert)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'adventures/02-building-cloudhaven/expert/**/*.tf'
+      - 'adventures/02-building-cloudhaven/expert/**/*.tftest.hcl'
+      - 'adventures/02-building-cloudhaven/expert/drift-log/*.md'
+
+concurrency:
+  group: pr-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  WORKING_DIR: adventures/02-building-cloudhaven/expert
+  # This is only needed because we're using a mock GCS backend.
+  # In production, you'd remove this.
+  # The actual value is set during startup.
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
+
+jobs:
+  # ----------------------------------------------------------------------------
+  # Validate & Plan
+  # ----------------------------------------------------------------------------
+  validate-and-plan:
+    name: 📋 Validate & Plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.11.2
+          tofu_wrapper: false
+
+      - name: 🔎 Validate & Plan
+        uses: OP5dev/TF-via-PR@v13
+        with:
+          working-directory: ${{ env.WORKING_DIR }}
+          command: plan
+          arg-lock: false
+          tool: tofu
+          format: true
+          validate: true
+
+  # ----------------------------------------------------------------------------
+  # Test
+  # ----------------------------------------------------------------------------
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+          tofu_wrapper: false
+
+      - name: 📦 Initialize
+        working-directory: ${{ env.WORKING_DIR }}
+        run: tofu init -backend=false
+
+      - name: 🧪 Run tests
+        working-directory: ${{ env.WORKING_DIR }}
+        run: tofu test
+
+  # ----------------------------------------------------------------------------
+  # Security Scan
+  # ----------------------------------------------------------------------------
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔒 Run Trivy
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: 'config'
+          scan-ref: ${{ env.WORKING_DIR }}
+          exit-code: '0'  # soft fail - don't block the PR
+          severity: 'CRITICAL,HIGH,MEDIUM'
