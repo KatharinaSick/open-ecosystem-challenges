@@ -13,7 +13,7 @@ GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDIN
 echo "📝 Configuring workflow files..."
 sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
   "$REPO_ROOT/.github/workflows/adventure02-expert-validate-and-plan.yaml" \
-  "$REPO_ROOT/.github/workflows/adventure02-expert-drift-detection.yaml" \
+  "$REPO_ROOT/.github/workflows/adventure02-expert-detect-drift.yaml" \
   "$REPO_ROOT/.github/workflows/adventure02-expert-apply.yaml"
 
 # Commit and push the workflow changes so they're available on GitHub
