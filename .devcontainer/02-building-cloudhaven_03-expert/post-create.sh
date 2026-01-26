@@ -10,5 +10,6 @@ track_codespace_created
 
 "$REPO_ROOT/lib/shared/init.sh"
 
+"$REPO_ROOT/lib/github-cli/init.sh"
 "$REPO_ROOT/lib/open-tofu/init.sh"
 "$REPO_ROOT/lib/gcp-api-mock/init.sh"

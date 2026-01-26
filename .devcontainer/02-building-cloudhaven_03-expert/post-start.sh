@@ -9,6 +9,10 @@ echo "✨ Starting Expert Level - CloudHaven Infrastructure"
 # Build the Codespace forwarded URL for the GCS mock API
 GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
 
+# Make port 30104 public so GitHub Actions can access it
+echo "🌐 Making GCP API Mock port public..."
+gh codespace ports visibility 30104:public -c "$CODESPACE_NAME"
+
 # Replace placeholders in workflow files with the actual Codespace URL
 echo "📝 Configuring workflow files..."
 sed -i "s|__GCP_MOCK_ENDPOINT__|${GCS_MOCK_URL}|g" \
