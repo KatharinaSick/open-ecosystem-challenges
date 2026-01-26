@@ -49,7 +49,8 @@ jobs:
         run: |
           set +e
           tofu plan -detailed-exitcode -out=tfplan
-          echo "exitcode=$?" >> $GITHUB_OUTPUT
+          EXIT_CODE=$?
+          echo "exitcode=$EXIT_CODE" >> $GITHUB_OUTPUT
 
       - name: 🔍 Check if infrastructure has drifted
         id: check-drift
