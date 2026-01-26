@@ -10,9 +10,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'adventures/02-building-cloudhaven/expert/**/*.tf'
-      - 'adventures/02-building-cloudhaven/expert/**/*.tftest.hcl'
-      - 'adventures/02-building-cloudhaven/expert/drift-log/*.md'
+      - 'adventures/02-building-cloudhaven/expert/**'
 
 concurrency:
   group: pr-${{ github.head_ref || github.run_id }}
