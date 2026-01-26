@@ -28,7 +28,7 @@ git commit -m "chore: configure workflows and Terraform for Codespace" --allow-e
 git push
 
 # Expose GCP mock publicly
-gh codespace ports visibility 30104:public -c $CODESPACE_NAME"
+gh codespace ports visibility 30104:public -c $CODESPACE_NAME
 
 # Create state bucket
 curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \
