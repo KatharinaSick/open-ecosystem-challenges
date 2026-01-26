@@ -23,13 +23,21 @@ curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \
 export STORAGE_EMULATOR_HOST="http://localhost:30104"
 
 cd "$CHALLENGE_DIR"
-echo "📦 Initializing root module..."
+echo "📦 Initializing infrastructure..."
 tofu init
+tofu apply -auto-approve
+
+# Simulate infrastructure drift by deleting a storage bucket outside of OpenTofu
+# This allows testing of drift detection workflows
+echo "🔧 Simulating drift: Deleting north-market vault bucket..."
+curl -X DELETE 'http://localhost:30104/storage/v1/b/cloudhaven-north-market-vault'
 
 # Initialize the district module so users can run tests immediately
 cd "$CHALLENGE_DIR/modules/district"
 echo "📦 Initializing district module for testing..."
 tofu init
+
+
 
 cd "$CHALLENGE_DIR"
 
