@@ -47,10 +47,8 @@ jobs:
         id: plan
         working-directory: ${{ env.WORKING_DIR }}
         run: |
-          set +e
-          tofu plan -detailed-exitcode -out=tfplan
-          EXIT_CODE="$?"
-          echo "DEBUG: Exit code is $EXIT_CODE"
+          EXIT_CODE=0
+          tofu plan -detailed-exitcode -out=tfplan || EXIT_CODE=$?
           
           if [ "$EXIT_CODE" -eq 2 ]; then
             echo "⚠️ Drift detected!"
