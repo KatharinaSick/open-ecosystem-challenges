@@ -49,7 +49,7 @@ jobs:
         run: |
           set +e
           tofu plan -detailed-exitcode -out=tfplan
-          EXIT_CODE=$?
+          EXIT_CODE="$?"
           echo "DEBUG: Exit code is $EXIT_CODE"
           
           if [ "$EXIT_CODE" -eq 2 ]; then
