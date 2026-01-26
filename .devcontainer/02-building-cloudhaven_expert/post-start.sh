@@ -6,6 +6,11 @@ CHALLENGE_DIR="$REPO_ROOT/adventures/02-building-cloudhaven/expert"
 
 echo "✨ Starting level 2 - Expert (TODO)"
 
+# Pull the act runner image in the background
+# This image is used by `make validate-plan-local` and `make drift-check-local`
+echo "🐳 Pulling act runner image in background..."
+docker pull catthehacker/ubuntu:act-latest &>/dev/null &
+
 # Create state bucket
 curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \
   -H 'Content-Type: application/json' \
@@ -36,8 +41,6 @@ curl -X DELETE 'http://localhost:30104/storage/v1/b/cloudhaven-north-market-vaul
 cd "$CHALLENGE_DIR/modules/district"
 echo "📦 Initializing district module for testing..."
 tofu init
-
-
 
 cd "$CHALLENGE_DIR"
 

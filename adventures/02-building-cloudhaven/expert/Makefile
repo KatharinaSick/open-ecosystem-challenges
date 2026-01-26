@@ -78,7 +78,7 @@ drift-check-local:
 # Test validate & plan workflow locally with nektos/act
 validate-plan-local:
 	@echo "🔎 Running validate & plan workflow locally with nektos/act..."
-	@gh act pull_request -e .github/sample-events/pull_request.json -P ubuntu-latest=catthehacker/ubuntu:full-latest --bind
+	@gh act pull_request -e .github/sample-events/pull_request.json -P ubuntu-latest=catthehacker/ubuntu:act-latest --bind
 
 # ----------------------------------------------------------------------------
 # Cleanup Targets
