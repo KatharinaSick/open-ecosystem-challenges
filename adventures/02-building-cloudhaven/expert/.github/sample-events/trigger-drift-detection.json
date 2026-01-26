@@ -1,6 +1,0 @@
-{
-  "act": true,
-  "inputs": {
-    "gcs_endpoint": "http://localhost:30104"
-  }
-}

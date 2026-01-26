@@ -20,7 +20,10 @@ on:
 
 env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
-  MOCK_API_URL: ${{ vars.CODESPACE_MOCK_URL }}
+  # This is only needed because we're using a mock GCS backend.
+  # In production, you'd remove this.
+  # __STORAGE_EMULATOR_HOST__ is replaced by post-start.sh
+  STORAGE_EMULATOR_HOST: "__STORAGE_EMULATOR_HOST__"
 
 jobs:
   apply:
@@ -44,29 +47,16 @@ jobs:
       - name: 🔧 Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
         with:
-          tofu_version: "1.9.0"
-
-      - name: 🔗 Verify Mock API Connection
-        run: |
-          echo "Connecting to Mock API at: ${{ env.MOCK_API_URL }}"
-          if ! curl -sf "${{ env.MOCK_API_URL }}/health" > /dev/null 2>&1; then
-            echo "❌ Cannot reach Mock API. Please ensure your Codespace is running."
-            exit 1
-          fi
-          echo "✅ Mock API is reachable"
+          tofu_version: "1.11.2"
 
       - name: 📦 Initialize OpenTofu
         working-directory: ${{ env.WORKING_DIR }}
-        env:
-          STORAGE_EMULATOR_HOST: ${{ env.MOCK_API_URL }}
         run: tofu init
 
       - name: 🚀 Apply changes
         working-directory: ${{ env.WORKING_DIR }}
-        env:
-          STORAGE_EMULATOR_HOST: ${{ env.MOCK_API_URL }}
         run: |
-          tofu apply -auto-approve -var="mock_api_url=${{ env.MOCK_API_URL }}"
+          tofu apply -auto-approve
           echo "✅ Infrastructure reconciled successfully"
 
       - name: 📝 Update drift log

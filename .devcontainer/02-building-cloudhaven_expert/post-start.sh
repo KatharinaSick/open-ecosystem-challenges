@@ -4,12 +4,17 @@ set -e
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHALLENGE_DIR="$REPO_ROOT/adventures/02-building-cloudhaven/expert"
 
-echo "✨ Starting level 2 - Expert (TODO)"
+echo "✨ Starting Expert Level - CloudHaven Infrastructure"
 
-# Pull the act runner image in the background
-# This image is used by `make validate-plan-local` and `make drift-check-local`
-echo "🐳 Pulling act runner image in background..."
-docker pull catthehacker/ubuntu:act-latest &>/dev/null &
+# Build the Codespace forwarded URL for the GCS mock API
+GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
+
+# Replace placeholders in workflow files with the actual Codespace URL
+echo "📝 Configuring workflow files..."
+sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
+  "$CHALLENGE_DIR/.github/workflows/validate-and-plan.yaml" \
+  "$CHALLENGE_DIR/.github/workflows/drift-detection.yaml" \
+  "$CHALLENGE_DIR/.github/workflows/apply.yaml"
 
 # Create state bucket
 curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \

@@ -1,6 +1,12 @@
+# ============================================================================
 # Drift Detection Workflow
-#
+# ============================================================================
 # Detects infrastructure drift and creates a PR to reconcile.
+#
+# NOTE: This file is symlinked from:
+#   adventures/02-building-cloudhaven/expert/.github/workflows/drift-detection.yaml
+# You can edit either file - they point to the same location.
+# ============================================================================
 
 name: 🔍 Drift Detection
 
@@ -10,11 +16,6 @@ on:
   #   - cron: '0 */n * * *'  # Every n hours
   # For this challenge, we use a manual trigger
   workflow_dispatch:
-    inputs:
-      gcs_endpoint:
-        description: 'GCS Backend Endpoint (Codespace forwarded URL for port 30104)'
-        required: true
-        type: string
 
 # Ensure only one drift detection runs at a time
 concurrency:
@@ -22,10 +23,11 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  WORKING_DIR: ${{ github.event.act && '.' || 'adventures/02-building-cloudhaven/expert' }}
+  WORKING_DIR: adventures/02-building-cloudhaven/expert
   # This is only needed because we're using a mock GCS backend.
-  # In production, you'd remove this
-  STORAGE_EMULATOR_HOST: ${{ inputs.gcs_endpoint }}
+  # In production, you'd remove this.
+  # __STORAGE_EMULATOR_HOST__ is replaced by post-start.sh
+  STORAGE_EMULATOR_HOST: "__STORAGE_EMULATOR_HOST__"
 
 jobs:
   detect-drift:
@@ -91,11 +93,7 @@ jobs:
           RUN_NUMBER: ${{ github.run_number }}
           TRIGGER: ${{ github.event_name }}
         run: |
-          if [ -n "$ACT" ]; then
-            LOG_DIR=".act/drift-log"
-          else
-            LOG_DIR="drift-log"
-          fi
+          LOG_DIR="drift-log"
 
           mkdir -p "$LOG_DIR"
           FILENAME="$LOG_DIR/$(date -u +%Y%m%d-%H%M%S).md"
@@ -121,7 +119,7 @@ jobs:
       # Create PR (if drift detected and not running locally)
       # ----------------------------------------------------------------------
       - name: 🔀 Create Pull Request
-        if: ${{ steps.check-drift.outputs.drift == 'true' && !github.event.act }}
+        if: steps.check-drift.outputs.drift == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -150,7 +148,6 @@ jobs:
       # Summary (GitHub Actions only)
       # ----------------------------------------------------------------------
       - name: 📝 Job Summary
-        if: ${{ !github.event.act }}
         run: |
           echo "## Drift Detection Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

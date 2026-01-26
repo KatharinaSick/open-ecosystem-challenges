@@ -1,11 +1,11 @@
 # ============================================================================
-# Makefile for CloudHaven Infrastructure - Intermediate Level
+# Makefile for CloudHaven Infrastructure - Expert Level
 # ============================================================================
 # This Makefile provides convenient commands for testing, planning, and
 # applying the CloudHaven district infrastructure.
 # ============================================================================
 
-.PHONY: help test-district test-integration test plan apply clean drift-check-local validate-plan-local
+.PHONY: help test-district test-integration test plan apply clean
 
 # Default target - show help
 help:
@@ -19,10 +19,6 @@ help:
 	@echo "Infrastructure:"
 	@echo "  make plan              - Run tofu plan to preview changes"
 	@echo "  make apply             - Apply infrastructure changes"
-	@echo ""
-	@echo "GitHub Workflows:"
-	@echo "  make drift-check-local    - Test drift detection workflow locally with act"
-	@echo "  make validate-plan-local  - Test validate & plan workflow locally with act"
 	@echo ""
 	@echo "Cleanup:"
 	@echo "  make clean             - Remove .terraform directories and lock files"
@@ -67,20 +63,6 @@ apply:
 	@tofu apply
 
 # ----------------------------------------------------------------------------
-# GitHub Workflow Targets
-# ----------------------------------------------------------------------------
-
-# Test drift detection workflow locally with nektos/act
-drift-check-local:
-	@echo "🔍 Running drift detection workflow locally with nektos/act..."
-	@gh act workflow_dispatch -e .github/sample-events/trigger-drift-detection.json -P ubuntu-latest=catthehacker/ubuntu:act-latest --bind
-
-# Test validate & plan workflow locally with nektos/act
-validate-plan-local:
-	@echo "🔎 Running validate & plan workflow locally with nektos/act..."
-	@gh act pull_request -e .github/sample-events/pull_request.json -P ubuntu-latest=catthehacker/ubuntu:act-latest --bind
-
-# ----------------------------------------------------------------------------
 # Cleanup Targets
 # ----------------------------------------------------------------------------
 
@@ -89,7 +71,6 @@ clean:
 	@echo "🧹 Cleaning up..."
 	@rm -rf .terraform modules/district/.terraform
 	@rm -f .terraform.lock.hcl modules/district/.terraform.lock.hcl
-	@podman stop gcp-api-mock-test > /dev/null 2>&1 || true
-	@podman rm gcp-api-mock-test > /dev/null 2>&1 || true
+	@docker stop gcp-api-mock-test > /dev/null 2>&1 || true
+	@docker rm gcp-api-mock-test > /dev/null 2>&1 || true
 	@echo "✨ Clean complete!"
-
