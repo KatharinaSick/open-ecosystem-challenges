@@ -47,6 +47,7 @@ jobs:
       - name: 📝 Run OpenTofu Plan
         id: plan
         working-directory: ${{ env.WORKING_DIR }}
+        shell: bash {0}
         run: |
           tofu plan -detailed-exitcode
           EXIT_CODE=$?
