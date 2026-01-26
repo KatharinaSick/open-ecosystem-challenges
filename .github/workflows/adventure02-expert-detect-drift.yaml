@@ -12,7 +12,7 @@ env:
   # This is only needed because we're using a mock GCS backend.
   # In production, you'd remove this.
   # The actual value is set during startup.
-  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
+  STORAGE_EMULATOR_HOST: "https://obscure-space-goldfish-w64r467x5vc9wrj-30104.app.github.dev"
 
 jobs:
   detect-drift:
