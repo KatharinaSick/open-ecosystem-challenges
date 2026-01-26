@@ -55,6 +55,7 @@ jobs:
         id: plan
         working-directory: ${{ env.WORKING_DIR }}
         run: |
+          set +e
           tofu plan -detailed-exitcode -out=tfplan
           EXIT_CODE=$?
 
