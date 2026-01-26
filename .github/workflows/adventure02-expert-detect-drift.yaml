@@ -35,6 +35,7 @@ jobs:
         uses: opentofu/setup-opentofu@v1
         with:
           tofu_version: "1.11.2"
+          tofu_wrapper: false
 
       # ----------------------------------------------------------------------
       # Initialize and Plan
@@ -47,9 +48,9 @@ jobs:
         id: plan
         working-directory: ${{ env.WORKING_DIR }}
         run: |
-          EXIT_CODE=0
-          tofu plan -detailed-exitcode -out=tfplan || EXIT_CODE=$?
-          
+          tofu plan -detailed-exitcode
+          EXIT_CODE=$?
+
           if [ "$EXIT_CODE" -eq 2 ]; then
             echo "⚠️ Drift detected!"
             echo "drift=true" >> $GITHUB_OUTPUT
