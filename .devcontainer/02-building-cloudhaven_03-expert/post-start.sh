@@ -15,10 +15,16 @@ sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
   "$REPO_ROOT/.github/workflows/adventure02-expert-detect-drift.yaml"
   # TODO others
 
-# Commit and push the workflow changes so they're available on GitHub
-echo "🚀 Pushing workflow configuration..."
+# Replace GCP mock endpoint placeholders in Terraform files
+echo "📝 Configuring Terraform files..."
+sed -i "s|__GCP_MOCK_ENDPOINT__|${GCS_MOCK_URL}|g" \
+  "$CHALLENGE_DIR/main.tf"
+
+# Commit and push the configuration changes so they're available on GitHub
+echo "🚀 Pushing configuration..."
 git add .github/workflows/adventure02-expert-*.yaml
-git commit -m "chore: configure workflows for Codespace" --allow-empty
+git add "$CHALLENGE_DIR/*.tf"
+git commit -m "chore: configure workflows and Terraform for Codespace" --allow-empty
 git push
 
 # Create state bucket
