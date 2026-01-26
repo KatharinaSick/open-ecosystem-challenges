@@ -2,12 +2,27 @@
 set -e
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CHALLENGE_DIR="$REPO_ROOT/adventures/02-building-cloudhaven/intermediate"
+CHALLENGE_DIR="$REPO_ROOT/adventures/02-building-cloudhaven/expert"
 
-echo "✨ Starting level 2 - Intermediate (The Modular Metropolis)"
+echo "✨ Starting Expert Level - CloudHaven Infrastructure"
+
+# Build the Codespace forwarded URL for the GCS mock API
+GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
+
+# Replace placeholders in workflow files with the actual Codespace URL
+echo "📝 Configuring workflow files..."
+sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
+  "$REPO_ROOT/.github/workflows/adventure02-expert-detect-drift.yaml"
+  # TODO others
+
+# Commit and push the workflow changes so they're available on GitHub
+echo "🚀 Pushing workflow configuration..."
+git add .github/workflows/adventure02-expert-*.yaml
+git commit -m "chore: configure workflows for Codespace" --allow-empty
+git push
 
 # Create state bucket
-curl -X POST 'http://localhost:30104/storage/v1/b?project=the-modular-metropolis' \
+curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "cloudhaven-tfstate",
@@ -23,8 +38,14 @@ curl -X POST 'http://localhost:30104/storage/v1/b?project=the-modular-metropolis
 export STORAGE_EMULATOR_HOST="http://localhost:30104"
 
 cd "$CHALLENGE_DIR"
-echo "📦 Initializing root module..."
+echo "📦 Initializing infrastructure..."
 tofu init
+tofu apply -auto-approve
+
+# Simulate infrastructure drift by deleting a storage bucket outside of OpenTofu
+# This allows testing of drift detection workflows
+echo "🔧 Simulating drift: Deleting north-market vault bucket..."
+curl -X DELETE 'http://localhost:30104/storage/v1/b/cloudhaven-north-market-vault'
 
 # Initialize the district module so users can run tests immediately
 cd "$CHALLENGE_DIR/modules/district"
@@ -36,6 +57,5 @@ cd "$CHALLENGE_DIR"
 # Track that the environment is ready
 # shellcheck disable=SC1091
 source "$REPO_ROOT/lib/scripts/tracker.sh"
-set_tracking_context "02-building-cloudhaven" "intermediate"
+set_tracking_context "02-building-cloudhaven" "expert"
 track_codespace_initialized
-
