@@ -16,6 +16,12 @@ sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
   "$CHALLENGE_DIR/.github/workflows/drift-detection.yaml" \
   "$CHALLENGE_DIR/.github/workflows/apply.yaml"
 
+# Commit and push the workflow changes so they're available on GitHub
+echo "🚀 Pushing workflow configuration..."
+git add "$CHALLENGE_DIR/.github/workflows/"
+git commit -m "chore: configure workflows for Codespace" --allow-empty
+git push
+
 # Create state bucket
 curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \
   -H 'Content-Type: application/json' \

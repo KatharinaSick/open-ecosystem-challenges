@@ -1,92 +1,92 @@
-# ============================================================================
-# Apply Workflow
-# ============================================================================
-# This workflow runs when a drift detection PR is merged.
-# It applies the OpenTofu configuration to reconcile the infrastructure.
+## ============================================================================
+## Apply Workflow
+## ============================================================================
+## This workflow runs when a drift detection PR is merged.
+## It applies the OpenTofu configuration to reconcile the infrastructure.
+##
+## Trigger: Merge of a PR with the "drift" label
+##
+## NOTE: This file is symlinked from:
+##   adventures/02-building-cloudhaven/expert/.github/workflows/apply.yaml
+## You can edit either file - they point to the same location.
+## ============================================================================
 #
-# Trigger: Merge of a PR with the "drift" label
+#name: 🚀 Apply Infrastructure
 #
-# NOTE: This file is symlinked from:
-#   adventures/02-building-cloudhaven/expert/.github/workflows/apply.yaml
-# You can edit either file - they point to the same location.
-# ============================================================================
-
-name: 🚀 Apply Infrastructure
-
-on:
-  pull_request:
-    types: [closed]
-    branches: [main]
-
-env:
-  WORKING_DIR: adventures/02-building-cloudhaven/expert
-  # This is only needed because we're using a mock GCS backend.
-  # In production, you'd remove this.
-  # __STORAGE_EMULATOR_HOST__ is replaced by post-start.sh
-  STORAGE_EMULATOR_HOST: "__STORAGE_EMULATOR_HOST__"
-
-jobs:
-  apply:
-    name: Apply Infrastructure Changes
-    runs-on: ubuntu-latest
-
-    # Only run if:
-    # 1. PR was merged (not just closed)
-    # 2. PR has the "drift" label
-    if: |
-      github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'drift')
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: 📥 Checkout repository
-        uses: actions/checkout@v4
-
-      - name: 🔧 Setup OpenTofu
-        uses: opentofu/setup-opentofu@v1
-        with:
-          tofu_version: "1.11.2"
-
-      - name: 📦 Initialize OpenTofu
-        working-directory: ${{ env.WORKING_DIR }}
-        run: tofu init
-
-      - name: 🚀 Apply changes
-        working-directory: ${{ env.WORKING_DIR }}
-        run: |
-          tofu apply -auto-approve
-          echo "✅ Infrastructure reconciled successfully"
-
-      - name: 📝 Update drift log
-        working-directory: ${{ env.WORKING_DIR }}
-        run: |
-          # Find the most recent drift log entry and mark it as applied
-          LATEST_LOG=$(ls -t drift-log/*.md 2>/dev/null | head -1)
-
-          if [ -n "$LATEST_LOG" ]; then
-            # Update the "Action Taken" checkboxes
-            sed -i 's/- \[ \] Merged and applied (pending)/- [x] Merged and applied/' "$LATEST_LOG"
-            sed -i 's/- \[ \] PR created for review/- [x] PR created for review/' "$LATEST_LOG"
-
-            # Add apply timestamp
-            echo "" >> "$LATEST_LOG"
-            echo "**Applied at:** $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$LATEST_LOG"
-            echo "**Applied by:** GitHub Actions (Workflow Run #${{ github.run_number }})" >> "$LATEST_LOG"
-          fi
-
-      - name: 💾 Commit drift log update
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "docs: update drift log - drift reconciled"
-          file_pattern: "${{ env.WORKING_DIR }}/drift-log/*.md"
-
-      - name: 📝 Job Summary
-        run: |
-          echo "## Infrastructure Applied" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ **Success** - Infrastructure has been reconciled" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The drift has been resolved and the drift log has been updated." >> $GITHUB_STEP_SUMMARY
-
+#on:
+#  pull_request:
+#    types: [closed]
+#    branches: [main]
+#
+#env:
+#  WORKING_DIR: adventures/02-building-cloudhaven/expert
+#  # This is only needed because we're using a mock GCS backend.
+#  # In production, you'd remove this.
+#  # __STORAGE_EMULATOR_HOST__ is replaced by post-start.sh
+#  STORAGE_EMULATOR_HOST: "__STORAGE_EMULATOR_HOST__"
+#
+#jobs:
+#  apply:
+#    name: Apply Infrastructure Changes
+#    runs-on: ubuntu-latest
+#
+#    # Only run if:
+#    # 1. PR was merged (not just closed)
+#    # 2. PR has the "drift" label
+#    if: |
+#      github.event.pull_request.merged == true &&
+#      contains(github.event.pull_request.labels.*.name, 'drift')
+#
+#    permissions:
+#      contents: write
+#
+#    steps:
+#      - name: 📥 Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: 🔧 Setup OpenTofu
+#        uses: opentofu/setup-opentofu@v1
+#        with:
+#          tofu_version: "1.11.2"
+#
+#      - name: 📦 Initialize OpenTofu
+#        working-directory: ${{ env.WORKING_DIR }}
+#        run: tofu init
+#
+#      - name: 🚀 Apply changes
+#        working-directory: ${{ env.WORKING_DIR }}
+#        run: |
+#          tofu apply -auto-approve
+#          echo "✅ Infrastructure reconciled successfully"
+#
+#      - name: 📝 Update drift log
+#        working-directory: ${{ env.WORKING_DIR }}
+#        run: |
+#          # Find the most recent drift log entry and mark it as applied
+#          LATEST_LOG=$(ls -t drift-log/*.md 2>/dev/null | head -1)
+#
+#          if [ -n "$LATEST_LOG" ]; then
+#            # Update the "Action Taken" checkboxes
+#            sed -i 's/- \[ \] Merged and applied (pending)/- [x] Merged and applied/' "$LATEST_LOG"
+#            sed -i 's/- \[ \] PR created for review/- [x] PR created for review/' "$LATEST_LOG"
+#
+#            # Add apply timestamp
+#            echo "" >> "$LATEST_LOG"
+#            echo "**Applied at:** $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$LATEST_LOG"
+#            echo "**Applied by:** GitHub Actions (Workflow Run #${{ github.run_number }})" >> "$LATEST_LOG"
+#          fi
+#
+#      - name: 💾 Commit drift log update
+#        uses: stefanzweifel/git-auto-commit-action@v5
+#        with:
+#          commit_message: "docs: update drift log - drift reconciled"
+#          file_pattern: "${{ env.WORKING_DIR }}/drift-log/*.md"
+#
+#      - name: 📝 Job Summary
+#        run: |
+#          echo "## Infrastructure Applied" >> $GITHUB_STEP_SUMMARY
+#          echo "" >> $GITHUB_STEP_SUMMARY
+#          echo "✅ **Success** - Infrastructure has been reconciled" >> $GITHUB_STEP_SUMMARY
+#          echo "" >> $GITHUB_STEP_SUMMARY
+#          echo "The drift has been resolved and the drift log has been updated." >> $GITHUB_STEP_SUMMARY
+#
