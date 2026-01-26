@@ -5,8 +5,8 @@
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
     }
   },
-  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_expert/post-create.sh",
-  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_expert/post-start.sh",
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_03-expert/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_03-expert/post-start.sh",
   "customizations": {
     "vscode": {
       "extensions": [
