@@ -11,7 +11,7 @@ GCS_MOCK_URL="https://${CODESPACE_NAME}-30104.${GITHUB_CODESPACES_PORT_FORWARDIN
 
 # Replace placeholders in workflow files with the actual Codespace URL
 echo "📝 Configuring workflow files..."
-sed -i "s|__STORAGE_EMULATOR_HOST__|${GCS_MOCK_URL}|g" \
+sed -i "s|__GCP_MOCK_ENDPOINT__|${GCS_MOCK_URL}|g" \
   "$REPO_ROOT/.github/workflows/adventure02-expert-detect-drift.yaml"
   # TODO others
 

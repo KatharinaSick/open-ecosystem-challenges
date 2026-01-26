@@ -28,7 +28,8 @@
   "portsAttributes": {
     "30104": {
       "label": "GCP API Mock",
-      "onAutoForward": "notify"
+      "onAutoForward": "notify",
+      "visibility": "public"
     }
   },
   "otherPortsAttributes": {

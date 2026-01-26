@@ -12,7 +12,7 @@ env:
   # This is only needed because we're using a mock GCS backend.
   # In production, you'd remove this.
   # The actual value is set during startup.
-  STORAGE_EMULATOR_HOST: "https://solid-space-journey-w64r467g7q295q6-30104.app.github.dev"
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 
 jobs:
   detect-drift:
