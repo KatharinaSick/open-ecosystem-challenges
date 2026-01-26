@@ -1,19 +1,18 @@
 {
-  "name": "🌆 Adventure 02 | 🔴 Expert (TODO)",
+  "name": "\uD83C\uDF06 Adventure 02 | \uD83D\uDFE1 Intermediate (The Modular Metropolis)",
   "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/02-building-cloudhaven/intermediate",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
     }
   },
-  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_expert/post-create.sh",
-  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_expert/post-start.sh",
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_intermediate/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/02-building-cloudhaven_intermediate/post-start.sh",
   "customizations": {
     "vscode": {
       "extensions": [
         "OpenTofu.vscode-opentofu",
-        "fabiospampinato.vscode-todo-plus",
-        "github.vscode-github-actions",
-        "ms-vscode.makefile-tools"
+        "fabiospampinato.vscode-todo-plus"
       ]
     },
     "codespaces": {
