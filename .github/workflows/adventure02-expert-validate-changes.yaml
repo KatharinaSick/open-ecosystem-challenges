@@ -54,6 +54,8 @@ jobs:
 
       - name: 🔎 Validate & Plan
         uses: OP5dev/TF-via-PR@v13
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           working-directory: ${{ env.WORKING_DIR }}
           command: plan
