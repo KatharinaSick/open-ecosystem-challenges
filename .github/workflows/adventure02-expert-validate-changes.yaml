@@ -63,6 +63,7 @@ jobs:
           tool: tofu
           format: true
           validate: true
+          expand-summary: true
 
   # ----------------------------------------------------------------------------
   # Test
