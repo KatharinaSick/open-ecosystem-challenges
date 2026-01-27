@@ -35,7 +35,7 @@ resource "google_sql_database_instance" "ledger" {
     ip_configuration {
       ipv4_enabled    = false
       private_network = "projects/cloudhaven/global/networks/default"
-      require_ssl     = true
+      ssl_mode        = "ENCRYPTED_ONLY"
     }
 
     insights_config {
