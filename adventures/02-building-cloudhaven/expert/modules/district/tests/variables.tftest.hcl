@@ -77,7 +77,7 @@ run "invalid_region_rejected" {
   variables {
     name        = "test-district"
     description = "Test district"
-    region      = "us-east1"  # Not in allowed list!
+    region      = "us-east1" # Not in allowed list!
     tier        = "standard"
   }
 
@@ -149,7 +149,7 @@ run "invalid_tier_rejected" {
     name        = "test-district"
     description = "Test district"
     region      = "europe-west1"
-    tier        = "basic"  # Not allowed! Use 'minimal' instead
+    tier        = "basic" # Not allowed! Use 'minimal' instead
   }
 
   expect_failures = [
@@ -201,7 +201,7 @@ run "invalid_name_uppercase_rejected" {
   command = plan
 
   variables {
-    name        = "Test-District"  # Uppercase not allowed!
+    name        = "Test-District" # Uppercase not allowed!
     description = "Test district"
     region      = "europe-west1"
     tier        = "standard"
@@ -216,7 +216,7 @@ run "invalid_name_starts_with_number_rejected" {
   command = plan
 
   variables {
-    name        = "123-district"  # Must start with letter!
+    name        = "123-district" # Must start with letter!
     description = "Test district"
     region      = "europe-west1"
     tier        = "standard"
@@ -231,7 +231,7 @@ run "invalid_name_ends_with_hyphen_rejected" {
   command = plan
 
   variables {
-    name        = "district-"  # Cannot end with hyphen!
+    name        = "district-" # Cannot end with hyphen!
     description = "Test district"
     region      = "europe-west1"
     tier        = "standard"
