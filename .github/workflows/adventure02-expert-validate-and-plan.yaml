@@ -8,8 +8,6 @@ name: 🌆🔴 | 🧐 Validate and Plan Infrastructure (Adventure 02 - Expert)
 
 on:
   pull_request:
-    paths:
-      - 'adventures/02-building-cloudhaven/expert/**'
 
 concurrency:
   group: pr-${{ github.head_ref || github.run_id }}
