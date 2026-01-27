@@ -130,6 +130,12 @@ jobs:
           echo "medium=$(count_severity MEDIUM vulnerabilities.json)" >> $GITHUB_OUTPUT
           echo "low=$(count_severity LOW vulnerabilities.json)" >> $GITHUB_OUTPUT
           echo "unknown=$(count_severity UNKNOWN vulnerabilities.json)" >> $GITHUB_OUTPUT
+          
+          # Generate details list
+          details=$(jq -r '.Results[]?.Misconfigurations[]? | "| \(.Severity) | \(.ID) | \(.Title) |"' vulnerabilities.json 2>/dev/null || echo "")
+          echo "details<<EOF" >> $GITHUB_OUTPUT
+          echo "$details" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: 💬 Comment on PR
         uses: actions/github-script@v8
@@ -147,10 +153,17 @@ jobs:
             | 🟢 Low | ${{ steps.count.outputs.low }} |
             | ⚪ Unknown | ${{ steps.count.outputs.unknown }} |
             
-            > ⚠️ Critical and High vulnerabilities must be resolved before merging.`;
+            > ⚠️ Critical and High vulnerabilities must be resolved before merging.
             
-            core.summary.addRaw(body).write();
+            <details>
+            <summary>📋 View Vulnerabilities</summary>
             
+            | Severity | ID | Title |
+            |----------|-----|-------|
+            ${{ steps.count.outputs.details }}
+            
+            </details>`;
+                        
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
