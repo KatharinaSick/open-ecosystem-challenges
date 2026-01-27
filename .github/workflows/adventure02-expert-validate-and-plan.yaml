@@ -18,6 +18,7 @@ concurrency:
 
 env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
+  TOFU_VERSION: "1.11.2"
   # This is only needed because we're using a mock GCS backend.
   # In production, you'd remove this.
   # The actual value is set during startup.
@@ -43,7 +44,7 @@ jobs:
       - name: 🔧 Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
         with:
-          tofu_version: 1.11.2
+          tofu_version: ${{ env.TOFU_VERSION }}
           tofu_wrapper: false
 
       - name: 🔎 Validate & Plan
