@@ -27,7 +27,7 @@ env:
   # This is only needed because we're using a mock GCS backend.
   # In production, you'd remove this.
   # The actual value is set during startup.
-  STORAGE_EMULATOR_HOST: "https://fluffy-trout-r9x4x9grw9f5x4j-30104.app.github.dev"
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 
 jobs:
   # ----------------------------------------------------------------------------
