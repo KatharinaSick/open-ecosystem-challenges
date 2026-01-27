@@ -8,6 +8,11 @@ name: 🌆🔴 | 🧐 Validate Infrastructure Changes (Adventure 02 - Expert)
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
     paths:
       - "adventures/02-building-cloudhaven/expert/**"
       - ".github/workflows/adventure02-expert-*.yaml"
