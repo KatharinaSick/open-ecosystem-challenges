@@ -32,6 +32,7 @@ resource "google_sql_database_instance" "ledger" {
       update_track = "stable"
     }
 
+    # trivy:ignore:AVD-GCP-0015 ssl_mode is set to ENCRYPTED_ONLY (Trivy bug: https://github.com/aquasecurity/trivy/discussions/9998)
     ip_configuration {
       ipv4_enabled    = false
       private_network = "projects/cloudhaven/global/networks/default"
