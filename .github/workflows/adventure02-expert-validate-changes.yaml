@@ -101,7 +101,6 @@ jobs:
 
     permissions:
       contents: read
-      security-events: write
       pull-requests: write
 
     steps:
@@ -131,8 +130,12 @@ jobs:
           echo "low=$(count_severity LOW vulnerabilities.json)" >> $GITHUB_OUTPUT
           echo "unknown=$(count_severity UNKNOWN vulnerabilities.json)" >> $GITHUB_OUTPUT
           
-          # Generate details list
-          details=$(jq -r '.Results[]?.Misconfigurations[]? | "| \(.Severity) | \(.ID) | \(.Title) |"' vulnerabilities.json 2>/dev/null || echo "")
+          # Generate details list (sorted by severity with emojis)
+          details=$(jq -r '
+            def severity_order: if . == "CRITICAL" then 0 elif . == "HIGH" then 1 elif . == "MEDIUM" then 2 elif . == "LOW" then 3 else 4 end;
+            def severity_emoji: if . == "CRITICAL" then "🔴" elif . == "HIGH" then "🟠" elif . == "MEDIUM" then "🟡" elif . == "LOW" then "🟢" else "⚪" end;
+            [.Results[]?.Misconfigurations[]?] | sort_by(.Severity | severity_order) | .[] | "| \(.Severity | severity_emoji) \(.Severity) | \(.ID) | \(.Title) |"
+          ' vulnerabilities.json 2>/dev/null || echo "")
           echo "details<<EOF" >> $GITHUB_OUTPUT
           echo "$details" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -163,8 +166,8 @@ jobs:
             ${{ steps.count.outputs.details }}
             
             </details>`;
-                        
-            github.rest.issues.createComment({
+            
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
