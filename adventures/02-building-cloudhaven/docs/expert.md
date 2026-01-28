@@ -31,7 +31,7 @@ By the end of this level, your workflows should:
 
 - **Detect infrastructure drift** by running `tofu plan`, identifying changes, and creating a PR when drift is found
 - **Validate pull requests** by running tests against the mock GCP API and scanning for security vulnerabilities
-- **Block dangerous changes** by failing when critical or high severity vulnerabilities are detected
+- **Block dangerous changes** by scanning for security vulnerabilities, logging all findings, and failing on critical or high severity issues
 - **Apply infrastructure automatically** when a PR is merged to main
 
 All three workflows must have succeeded at least once.
@@ -141,7 +141,7 @@ For comprehensive validation and to officially claim completion:
 
 1. **Commit and push your changes** to your fork
 2. **Manually trigger the verification workflow** on GitHub Actions
-3. **Share your success** with the [community](TODO)
+3. **Share your success** with the [community](https://community.open-ecosystem.com/t/adventure-02-building-cloudhaven-expert-the-guardian-protocols)
 
 > 📖 **Need detailed verification instructions?** Check out the [Verification Guide](../../verification) for
 > step-by-step instructions on both smoke tests and GitHub Actions workflows.

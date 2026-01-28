@@ -44,9 +44,10 @@ jobs:
     if: github.event.pull_request.merged == true
 
     permissions:
-      actions: read   # Required to identify workflow run.
-      checks: write   # Required to add status summary.
-      contents: read  # Required to checkout repository.
+      actions: read        # Required to identify workflow run.
+      checks: write        # Required to add status summary.
+      contents: read       # Required to checkout repository.
+      pull-requests: write # Required to post comments on PR.
 
     steps:
       - name: 📥 Checkout repository
