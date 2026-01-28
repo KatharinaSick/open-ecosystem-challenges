@@ -86,6 +86,23 @@ Review the [🎯 Objective](#objective) section to understand what a successful 
 > ℹ️ **Note:** The OpenTofu configuration is correct - you don't need to modify any `.tf` files. Focus on fixing the
 > GitHub Actions workflows.
 
+#### How the Workflows Should Work Together
+
+Once fixed, the Guardian Protocols work like this:
+
+1. **Drift Detection:** Trigger manually via the GitHub Actions UI. If drift is detected, a draft PR is created with
+   a drift log entry.
+
+2. **Mark PR Ready for Review:** The PR is created as a draft intentionally. You must click "Ready for Review" to
+   trigger the validation workflow. This is a
+   [GitHub Actions limitation](https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs).
+
+   ![Draft PR](images/expert/draft-pr.png)
+
+3. **Validation:** Once the PR is ready for review, the validation workflow runs tests and security scans.
+
+4. **Apply:** When the PR is merged to main, the apply workflow automatically reconciles the infrastructure.
+
 #### Where to Look
 
 The workflows are located in:
@@ -102,7 +119,7 @@ The workflows are located in:
 - [GitHub Actions](https://docs.github.com/en/actions)
 - [OpenTofu Plan](https://opentofu.org/docs/cli/commands/plan/)
 - [Trivy Action](https://github.com/aquasecurity/trivy-action)
-- [TF-via-PR](https://github.com/OP5dev/TF-via-PR)
+- [TF-via-PR Action](https://github.com/OP5dev/TF-via-PR)
 
 ### 4. Verify Your Solution
 
