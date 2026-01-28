@@ -16,9 +16,8 @@ concurrency:
 
 env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
-  TOFU_VERSION: "1.11.2"
-  # This is only needed because we're using a mock GCS backend.
-  # In production, you'd remove this.
+  TOFU_VERSION: "1.11.4"
+  # This is only needed because we're using a mock GCS backend. In production, you'd remove this.
   # The actual value is set during startup.
   STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 

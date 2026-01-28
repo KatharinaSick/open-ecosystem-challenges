@@ -1,5 +1,5 @@
 # ============================================================================
-# Makefile for CloudHaven Infrastructure - Intermediate Level
+# Makefile for CloudHaven Infrastructure - Expert Level
 # ============================================================================
 # This Makefile provides convenient commands for testing, planning, and
 # applying the CloudHaven district infrastructure.

@@ -14,7 +14,7 @@ provider "google" {
   project = "the-modular-metropolis"
   region  = var.region
 
-  # Point to the TEST mock GCP API (separate instance on port 30105)
+  # Point to the TEST mock GCP API (separate instance on port 9000)
   storage_custom_endpoint = "http://localhost:9000/storage/v1/"
   sql_custom_endpoint     = "http://localhost:9000/"
 
