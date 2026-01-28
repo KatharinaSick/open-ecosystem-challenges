@@ -1,16 +1,22 @@
 # ============================================================================
 # Apply Workflow
 # ============================================================================
-# This workflow runs when changes are pushed to main.
+# This workflow runs when a PR is merged to main.
 # It applies the OpenTofu configuration to reconcile the infrastructure.
 #
-# Trigger: Push to main branch
+# Trigger: PR merged to main branch
+#
+# Note: In production, triggering on `push` to main with proper branch
+# protection rules (requiring PRs) is simpler. We use `pull_request: closed`
+# here because post-start.sh commits URL updates directly to main, which
+# would trigger unwanted applies.
 # ============================================================================
 
 name: 🌆🔴 | 🚀 Apply Infrastructure (Adventure 02 - Expert)
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: [main]
     paths:
       - "adventures/02-building-cloudhaven/expert/**"
@@ -25,14 +31,17 @@ env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
   TOFU_VERSION: "1.11.4"
   # This is only needed because we're using a mock GCS backend. In production, you'd remove this.
-  # The actual value is set during startup.
-  STORAGE_EMULATOR_HOST: "https://bookish-sniffle-j6gjg657rv2q4rq-30104.app.github.dev"
+  # __GCP_MOCK_ENDPOINT__ is replaced by post-start.sh
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 
 jobs:
   apply:
     name: 🚀 Apply Infrastructure Changes
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
+    # Only run if the PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
 
     permissions:
       actions: read   # Required to identify workflow run.

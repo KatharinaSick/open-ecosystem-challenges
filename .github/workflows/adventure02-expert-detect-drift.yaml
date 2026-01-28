@@ -19,7 +19,7 @@ env:
   TOFU_VERSION: "1.11.4"
   # This is only needed because we're using a mock GCS backend. In production, you'd remove this.
   # The actual value is set during startup.
-  STORAGE_EMULATOR_HOST: "https://bookish-sniffle-j6gjg657rv2q4rq-30104.app.github.dev"
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 
 jobs:
   detect-drift:
@@ -157,6 +157,6 @@ jobs:
             echo "### 🚀 Next Steps" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "1. Review the PR and the drift log entry" >> $GITHUB_STEP_SUMMARY
-            echo "2. Click **Ready for review** to trigger validation" >> $GITHUB_STEP_SUMMARY
+            echo "2. Click **Ready for review** to trigger validation ([why?](https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs))" >> $GITHUB_STEP_SUMMARY
             echo "3. Merge to apply changes with \`tofu apply\`" >> $GITHUB_STEP_SUMMARY
           fi

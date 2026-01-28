@@ -32,7 +32,7 @@ By the end of this level, your workflows should:
 - **Detect infrastructure drift** by running `tofu plan`, identifying changes, and creating a PR when drift is found
 - **Validate pull requests** by running tests against the mock GCP API and scanning for security vulnerabilities
 - **Block dangerous changes** by failing when critical or high severity vulnerabilities are detected
-- **Apply infrastructure automatically** when changes are pushed to main
+- **Apply infrastructure automatically** when a PR is merged to main
 
 All three workflows must have succeeded at least once.
 
