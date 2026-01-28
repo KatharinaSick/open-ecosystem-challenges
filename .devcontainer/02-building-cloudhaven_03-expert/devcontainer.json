@@ -1,5 +1,5 @@
 {
-  "name": "🌆 Adventure 02 | 🔴 Expert (TODO)",
+  "name": "🌆 Adventure 02 | 🔴 Expert (The Guardian Protocols)",
   "image": "mcr.microsoft.com/devcontainers/base:bullseye",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {

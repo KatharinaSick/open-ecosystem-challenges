@@ -32,7 +32,7 @@ git push
 gh codespace ports visibility 30104:public -c $CODESPACE_NAME
 
 # Create state bucket
-curl -X POST 'http://localhost:30104/storage/v1/b?project=todo' \
+curl -X POST 'http://localhost:30104/storage/v1/b?project=the-guardian-protocols' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "cloudhaven-tfstate",

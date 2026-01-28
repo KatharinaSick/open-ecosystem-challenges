@@ -11,7 +11,7 @@
 # ============================================================================
 
 provider "google" {
-  project = "the-modular-metropolis"
+  project = "the-guarian-protocols"
   region  = var.region
 
   # Point to the TEST mock GCP API (separate instance on port 9000)
