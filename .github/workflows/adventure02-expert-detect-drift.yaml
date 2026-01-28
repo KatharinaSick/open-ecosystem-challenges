@@ -19,7 +19,7 @@ env:
   TOFU_VERSION: "1.11.4"
   # This is only needed because we're using a mock GCS backend. In production, you'd remove this.
   # The actual value is set during startup.
-  STORAGE_EMULATOR_HOST: "https://urban-system-7qxvxq9wg6frvxj-30104.app.github.dev"
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 
 jobs:
   detect-drift:
@@ -107,6 +107,7 @@ jobs:
       # Create PR (if drift detected)
       # ----------------------------------------------------------------------
       - name: 🔀 Create Pull Request
+        id: create-pr
         if: steps.plan.outputs.drift == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
@@ -138,14 +139,24 @@ jobs:
       # ----------------------------------------------------------------------
       - name: 📝 Job Summary
         run: |
-          echo "## Drift Detection Results" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔍 Drift Detection Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ "${{ steps.plan.outputs.drift }}" == "false" ]; then
-            echo "✅ **No drift detected** - Infrastructure matches desired state" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "🚨 **Drift detected** - A PR has been created to reconcile" >> $GITHUB_STEP_SUMMARY
+            echo "✅ **No drift detected**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
-            echo "1. Review the PR" >> $GITHUB_STEP_SUMMARY
-            echo "2. Merge to trigger \`tofu apply\`" >> $GITHUB_STEP_SUMMARY
+            echo "Infrastructure matches the desired state. Nothing to do!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🚨 **Drift detected**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Infrastructure has drifted from the desired state. A PR has been created to reconcile." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📋 Pull Request" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🔗 [PR #${{ steps.create-pr.outputs.pull-request-number }}](${{ steps.create-pr.outputs.pull-request-url }})" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 🚀 Next Steps" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "1. Review the PR and the drift log entry" >> $GITHUB_STEP_SUMMARY
+            echo "2. Click **Ready for review** to trigger validation" >> $GITHUB_STEP_SUMMARY
+            echo "3. Merge to apply changes with \`tofu apply\`" >> $GITHUB_STEP_SUMMARY
           fi

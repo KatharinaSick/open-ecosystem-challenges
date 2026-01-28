@@ -1,7 +1,7 @@
 # 🔴 Expert: The Guardian Protocols
 
 After the Modular Metropolis refactoring, CloudHaven flourished. But with growth came risk. One night, a rogue change
-slipped through unnoticed and nearly brought down the Scholar's District archives. The Council was furious — how could
+slipped through unnoticed and nearly brought down the North Market's trading vaults. The Council was furious — how could
 this happen without anyone noticing?
 
 The Guild Master summoned you urgently. "We need guardians," she said, "automated sentinels that watch over our
