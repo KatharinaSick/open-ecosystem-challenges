@@ -31,8 +31,8 @@ env:
   WORKING_DIR: adventures/02-building-cloudhaven/expert
   TOFU_VERSION: "1.11.4"
   # This is only needed because we're using a mock GCS backend. In production, you'd remove this.
-  # https://sturdy-journey-44rjr47rr6fgjj-30104.app.github.dev is replaced by post-start.sh
-  STORAGE_EMULATOR_HOST: "https://sturdy-journey-44rjr47rr6fgjj-30104.app.github.dev"
+  # The actual value is set during startup.
+  STORAGE_EMULATOR_HOST: "__GCP_MOCK_ENDPOINT__"
 
 jobs:
   apply:
