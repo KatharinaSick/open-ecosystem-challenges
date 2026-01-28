@@ -36,7 +36,7 @@ terraform {
 # In real life, this would be omitted to point to actual GCP endpoints.
 # -----------------------------------------------------------------------------
 provider "google" {
-  project = "the-guarian-protocols"
+  project = "the-guardian-protocols"
   region  = var.region
 
   # Technically, this wouldn't be necessary because we're also setting the
