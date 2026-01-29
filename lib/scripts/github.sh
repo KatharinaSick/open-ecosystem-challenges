@@ -15,18 +15,16 @@ check_workflow_succeeded() {
   print_test_section "Checking $display_name workflow..."
 
   local run_id
-  run_id=$(gh run list --workflow="$workflow_file" --status=success --limit=1 --json databaseId --jq '.[0].databaseId' 2>/dev/null || echo "")
+  run_id=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow="$workflow_file" --status=success --limit=1 --json databaseId --jq '.[0].databaseId' 2>/dev/null || echo "")
 
   if [ -z "$run_id" ] || [ "$run_id" == "null" ]; then
     print_error_indent "$display_name workflow has not succeeded yet"
     print_hint "$hint"
     TESTS_FAILED=$((TESTS_FAILED + 1))
     FAILED_CHECKS+=("check_workflow_succeeded:$workflow_file")
-    return 1
   else
     print_success_indent "$display_name workflow has succeeded"
     TESTS_PASSED=$((TESTS_PASSED + 1))
-    return 0
   fi
 }
 
@@ -43,7 +41,7 @@ check_pr_exists_with_label() {
   print_test_section "Checking if $display_name PR exists..."
 
   local pr_json
-  pr_json=$(gh pr list --label="$label" --json number,title --jq '.[0]' 2>/dev/null || echo "")
+  pr_json=$(gh pr list --repo "$GITHUB_REPOSITORY" --label="$label" --json number,title --jq '.[0]' 2>/dev/null || echo "")
 
   if [ -z "$pr_json" ] || [ "$pr_json" == "null" ]; then
     print_error_indent "No PR with '$label' label found"
@@ -52,13 +50,11 @@ check_pr_exists_with_label() {
     FAILED_CHECKS+=("check_pr_exists_with_label:$label")
     PR_NUMBER=""
     PR_TITLE=""
-    return 1
   else
     PR_NUMBER=$(echo "$pr_json" | jq -r '.number')
     PR_TITLE=$(echo "$pr_json" | jq -r '.title')
     print_success_indent "$display_name PR found: #$PR_NUMBER - $PR_TITLE"
     TESTS_PASSED=$((TESTS_PASSED + 1))
-    return 0
   fi
 }
 
@@ -78,21 +74,48 @@ check_pr_has_comment() {
     print_error_indent "Cannot check PR comments - no PR number provided"
     TESTS_FAILED=$((TESTS_FAILED + 1))
     FAILED_CHECKS+=("check_pr_has_comment:$display_name")
-    return 1
-  fi
-
-  local comment_count
-  comment_count=$(gh pr view "$pr_number" --comments --json comments --jq '.comments[].body' 2>/dev/null | grep -c "$search_pattern" || echo "0")
-
-  if [ "$comment_count" -gt 0 ]; then
-    print_success_indent "PR has $display_name"
-    TESTS_PASSED=$((TESTS_PASSED + 1))
-    return 0
   else
-    print_error_indent "PR is missing $display_name"
-    print_hint "$hint"
-    TESTS_FAILED=$((TESTS_FAILED + 1))
-    FAILED_CHECKS+=("check_pr_has_comment:$display_name")
-    return 1
+    local comment_count
+    comment_count=$(gh pr view "$pr_number" --repo "$GITHUB_REPOSITORY" --comments --json comments --jq '.comments[].body' 2>/dev/null | grep -c "$search_pattern" || echo "0")
+
+    if [ "$comment_count" -gt 0 ]; then
+      print_success_indent "PR has $display_name"
+      TESTS_PASSED=$((TESTS_PASSED + 1))
+    else
+      print_error_indent "PR is missing $display_name"
+      print_hint "$hint"
+      TESTS_FAILED=$((TESTS_FAILED + 1))
+      FAILED_CHECKS+=("check_pr_has_comment:$display_name")
+    fi
   fi
 }
+
+# -----------------------------------------------------------------------------
+# Check if a workflow step contains a specific pattern
+# Extracts content between "- name: <step_name>" and the next "- name:" or end of job
+# Usage: check_workflow_step_contains "file-path" "step-name" "pattern" "Display Name" "Hint message"
+# -----------------------------------------------------------------------------
+check_workflow_step_contains() {
+  local file_path=$1
+  local step_name=$2
+  local pattern=$3
+  local display_name=$4
+  local hint=$5
+
+  print_test_section "Checking $display_name..."
+
+  # Extract the step content using sed (from step name until next step)
+  local step_content
+  step_content=$(sed -n "/${step_name}/,/^[[:space:]]*- name:/p" "$file_path" 2>/dev/null | sed '$d')
+
+  if echo "$step_content" | grep -q "$pattern" 2>/dev/null; then
+    print_success_indent "$display_name"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+  else
+    print_error_indent "$display_name - not found"
+    print_hint "$hint"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    FAILED_CHECKS+=("check_workflow_step_contains:$step_name:$pattern")
+  fi
+}
+

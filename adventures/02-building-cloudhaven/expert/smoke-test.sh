@@ -49,7 +49,7 @@ check_pr_exists_with_label "drift" "Drift" \
 print_new_line
 
 # 1.3: Check if plan step actually runs tofu plan (not hardcoded)
-check_file_contains "$WORKFLOW_DIR/$DRIFT_WORKFLOW" "tofu plan" "Plan step contains 'tofu plan' command" \
+check_workflow_step_contains "$WORKFLOW_DIR/$DRIFT_WORKFLOW" "Run OpenTofu Plan" "tofu plan" "Plan step runs 'tofu plan'" \
   "The '📝 Run OpenTofu Plan' step should actually run tofu plan to detect drift"
 print_new_line
 
@@ -78,8 +78,8 @@ check_pr_has_comment "$PR_NUMBER" "Security Scan" "security scan comment" \
 print_new_line
 
 # 2.4: Check if Trivy is properly configured (outputs to json file)
-check_file_contains "$WORKFLOW_DIR/$VALIDATE_WORKFLOW" "vulnerabilities.json" "Trivy outputs to vulnerabilities.json" \
-  "Configure the Trivy action to output results to 'vulnerabilities.json'"
+check_workflow_step_contains "$WORKFLOW_DIR/$VALIDATE_WORKFLOW" "Scan for Vulnerabilities" "output:" "Trivy step has output configured" \
+  "Configure the Trivy action to output scan results to a file"
 print_new_line
 
 # 2.5: Check if fail step actually exits (not just echo)

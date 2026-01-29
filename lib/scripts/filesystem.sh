@@ -18,12 +18,12 @@ check_file_contains() {
   if grep -q "$pattern" "$file_path" 2>/dev/null; then
     print_success_indent "$display_name"
     TESTS_PASSED=$((TESTS_PASSED + 1))
-    return 0
   else
     print_error_indent "$display_name - not found"
     print_hint "$hint"
     TESTS_FAILED=$((TESTS_FAILED + 1))
     FAILED_CHECKS+=("check_file_contains:$pattern")
-    return 1
   fi
 }
+
+
