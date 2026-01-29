@@ -55,7 +55,20 @@ jobs:
         id: plan
         working-directory: ${{ env.WORKING_DIR }}
         run: |
-          echo "drift=false" >> $GITHUB_OUTPUT
+          set +e
+          tofu plan -detailed-exitcode -out=tfplan
+          EXIT_CODE=$?
+
+          if [ "$EXIT_CODE" -eq 2 ]; then
+            echo "⚠️ Drift detected!"
+            echo "drift=true" >> $GITHUB_OUTPUT
+          elif [ "$EXIT_CODE" -eq 0 ]; then
+            echo "✅ No drift detected."
+            echo "drift=false" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Plan failed with exit code $EXIT_CODE"
+            exit 1
+          fi
 
       # ----------------------------------------------------------------------
       # Generate Drift Log Entry (only if drift detected)
