@@ -47,7 +47,6 @@ jobs:
       actions: read        # Required to identify workflow run.
       checks: write        # Required to add status summary.
       contents: read       # Required to checkout repository.
-      pull-requests: write # Required to post comments on PR.
 
     steps:
       - name: 📥 Checkout repository
@@ -69,3 +68,4 @@ jobs:
           format: true
           validate: true
           expand-summary: true
+          comment-pr: never
