@@ -89,7 +89,7 @@ incomplete and broken.
 
 Review the [🎯 Objective](#objective) section to understand what a successful solution looks like.
 
-> ℹ️ **Note:** The OpenTofu configuration is correct - you don't need to modify any `.tf` files. Focus on fixing the
+> ℹ️ **Note:** The OpenTofu configuration is correct. You don't need to modify any `.tf` files. Focus on fixing the
 > GitHub Actions workflows.
 
 #### How the Workflows Should Work Together
@@ -98,6 +98,8 @@ Once fixed, the Guardian Protocols work like this:
 
 1. **Drift Detection:** Trigger manually via the GitHub Actions UI. If drift is detected, a draft PR is created with
    a drift log entry.
+
+   > ℹ️ The infrastructure has intentional drift — the workflow should detect changes and create a PR.
 
 2. **Mark PR Ready for Review:** The PR is created as a draft intentionally. You must click "Ready for Review" to
    trigger the validation workflow. This is a
@@ -115,15 +117,33 @@ The workflows are located in:
 
 ```
 .github/workflows/
-├── adventure02-expert-detect-drift.yaml      # Drift detection workflow
-├── adventure02-expert-validate-changes.yaml  # PR validation workflow
-└── adventure02-expert-apply-infrastructure.yaml  # Apply workflow
+├── adventure02-expert-detect-drift.yaml            # Drift detection workflow
+├── adventure02-expert-validate-changes.yaml        # PR validation workflow
+└── adventure02-expert-apply-infrastructure.yaml    # Apply workflow
 ```
+
+#### Deploy Your Changes
+
+After making your fixes, commit and push them to trigger the workflows:
+
+```bash
+git add .github/workflows/
+git commit -m "Fix workflows"
+git push
+```
+
+Then re-run the workflows to test your changes:
+
+1. Go to the **Actions** tab in your repository
+2. Select the workflow you want to test
+3. If it failed previously, click **"Re-run all jobs"**
+4. For drift detection, click **"Run workflow"** to trigger it manually
 
 #### Helpful Documentation
 
 - [GitHub Actions](https://docs.github.com/en/actions)
-- [OpenTofu Plan](https://opentofu.org/docs/cli/commands/plan/)
+- [GitHub Actions Service Containers](https://docs.github.com/en/actions/use-cases-and-examples/using-containerized-services/about-service-containers)
+- [OpenTofu Plan Command](https://opentofu.org/docs/cli/commands/plan/)
 - [Trivy Action](https://github.com/aquasecurity/trivy-action)
 - [TF-via-PR Action](https://github.com/OP5dev/TF-via-PR)
 
