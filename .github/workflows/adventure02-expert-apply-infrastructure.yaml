@@ -63,7 +63,6 @@ jobs:
         with:
           working-directory: ${{ env.WORKING_DIR }}
           command: apply
-          arg-auto-approve: true
           tool: tofu
           format: true
           validate: true

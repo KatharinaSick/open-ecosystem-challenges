@@ -29,10 +29,16 @@ in the Open Ecosystem Community.
 
 By the end of this level, your workflows should:
 
-- **Detect infrastructure drift** by running `tofu plan`, identifying changes, and creating a PR when drift is found
-- **Validate pull requests** by running tests against the mock GCP API and scanning for security vulnerabilities
-- **Block dangerous changes** by scanning for security vulnerabilities, logging all findings, and failing on critical or high severity issues
-- **Apply infrastructure automatically** when a PR is merged to main
+- **Detect infrastructure drift**
+    - Run `tofu plan` to check for changes
+    - Create a PR when drift is found
+- **Validate pull requests**
+    - Run `tofu plan` and comment results on the PR
+    - Run tests against the mock GCP API
+    - Scan for security vulnerabilities and comment results on the PR
+    - Fail on critical or high severity vulnerabilities
+- **Apply infrastructure automatically**
+    - Apply changes when a PR is merged to main
 
 All three workflows must have succeeded at least once.
 
@@ -41,7 +47,7 @@ All three workflows must have succeeded at least once.
 - [GitHub Actions](https://docs.github.com/en/actions) workflows for infrastructure automation
 - Infrastructure drift detection with `tofu plan`
 - Security scanning with [Trivy](https://trivy.dev/)
-- Running integration tests in GitHub Actions
+- Running integration tests with [service containers](https://docs.github.com/en/actions/use-cases-and-examples/using-containerized-services/about-service-containers)
 - The [TF-via-PR](https://github.com/OP5dev/TF-via-PR) action for plan/apply workflows
 
 ## 🧰 Toolbox

@@ -6,20 +6,20 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/../../../lib/scripts/loader.sh"
 
-OBJECTIVE="By the end of this level, you should have:
+OBJECTIVE="By the end of this level, your workflows should:
 
-- All tests of the districts module pass
-- A completed integration test that applies infrastructure against the mock GCP API
-- Three districts deployed with correctly configured infrastructure (vaults and ledgers)"
+- Detect infrastructure drift (run tofu plan, create PR when drift found)
+- Validate pull requests (run plan, tests, security scans, comment on PR)
+- Apply infrastructure automatically when PR is merged"
 
-DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/02-building-cloudhaven/intermediate"
+DOCS_URL="https://dynatrace-oss.github.io/open-ecosystem-challenges/02-building-cloudhaven/expert"
 
 print_header \
   'Challenge 02: Building CloudHaven' \
-  'Level 2: The Modular Metropolis' \
+  '🔴 Expert: The Guardian Protocols' \
   'Smoke Test Verification'
 
-check_prerequisites curl jq tofu
+check_prerequisites curl jq gh
 
 print_sub_header "Running smoke tests..."
 
@@ -29,79 +29,90 @@ TESTS_FAILED=0
 FAILED_CHECKS=()
 
 # =============================================================================
-# Check 1: District module tests pass
+# Check 1: Drift Detection Workflow
+# Workflow: adventure02-expert-detect-drift.yaml
 # =============================================================================
-print_test_section "Running district module tests..."
 
-cd "$SCRIPT_DIR/modules/district"
-if tofu test > /dev/null 2>&1; then
-  print_success_indent "All district module tests pass"
-  TESTS_PASSED=$((TESTS_PASSED + 1))
-else
-  print_error_indent "District module tests are failing"
-  print_hint "Run 'make test-district' to see which tests fail and fix the bugs"
-  TESTS_FAILED=$((TESTS_FAILED + 1))
-  FAILED_CHECKS+=("district_module_tests")
-fi
-cd "$SCRIPT_DIR"
+print_sub_header "Workflow: Detect Infrastructure Drift"
+
+DRIFT_WORKFLOW="adventure02-expert-detect-drift.yaml"
+WORKFLOW_DIR="$SCRIPT_DIR/../../../.github/workflows"
+
+# 1.1: Check if workflow ran & succeeded
+check_workflow_succeeded "$DRIFT_WORKFLOW" "Drift detection" \
+  "Run the 'Detect Infrastructure Drift' workflow from GitHub Actions (Actions tab → select workflow → Run workflow). Check workflow run logs if it fails."
+print_new_line
+
+# 1.2: Check if PR was created with drift label
+check_pr_exists_with_label "drift" "Drift" \
+  "The drift detection workflow should create a PR when drift is detected. Check if the plan step is correctly detecting changes."
+print_new_line
+
+# 1.3: Check if plan step actually runs tofu plan (not hardcoded)
+check_file_contains "$WORKFLOW_DIR/$DRIFT_WORKFLOW" "tofu plan" "Plan step contains 'tofu plan' command" \
+  "The '📝 Run OpenTofu Plan' step should actually run tofu plan to detect drift"
 print_new_line
 
 # =============================================================================
-# Check 2: Integration test passes
+# Check 2: Validate Changes Workflow
+# Workflow: adventure02-expert-validate-changes.yaml
 # =============================================================================
-print_test_section "Running integration tests..."
 
-# Start the test mock server
-docker run -d -p 9000:8080 --name gcp-api-mock-test ghcr.io/katharinasick/gcp-api-mock:v1.1.4 > /dev/null 2>&1 || true
-sleep 2
+print_sub_header "Workflow: Validate Infrastructure Changes"
 
-if tofu test > /dev/null 2>&1; then
-  print_success_indent "Integration test passes"
-  TESTS_PASSED=$((TESTS_PASSED + 1))
-else
-  print_error_indent "Integration test is failing"
-  print_hint "Complete the tests/integration.tftest.hcl file"
-  TESTS_FAILED=$((TESTS_FAILED + 1))
-  FAILED_CHECKS+=("integration_test")
-fi
+VALIDATE_WORKFLOW="adventure02-expert-validate-changes.yaml"
 
-# Stop the test mock server
-docker stop gcp-api-mock-test > /dev/null 2>&1 || true
-docker rm gcp-api-mock-test > /dev/null 2>&1 || true
+# 2.1: Check if validate workflow ran & succeeded
+check_workflow_succeeded "$VALIDATE_WORKFLOW" "Validate changes" \
+  "Mark the drift PR as 'Ready for Review' to trigger the validation workflow. Check workflow run logs if it fails."
+print_new_line
+
+# 2.2: Check if PR has plan comment (from TF-via-PR)
+check_pr_has_comment "$PR_NUMBER" "OpenTofu" "plan comment" \
+  "The validation workflow should comment the plan results on the PR"
+print_new_line
+
+# 2.3: Check if PR has security scan comment
+check_pr_has_comment "$PR_NUMBER" "Security Scan" "security scan comment" \
+  "Fix the Trivy scan configuration to output results and comment on the PR"
+print_new_line
+
+# 2.4: Check if Trivy is properly configured (outputs to json file)
+check_file_contains "$WORKFLOW_DIR/$VALIDATE_WORKFLOW" "vulnerabilities.json" "Trivy outputs to vulnerabilities.json" \
+  "Configure the Trivy action to output results to 'vulnerabilities.json'"
+print_new_line
+
+# 2.5: Check if fail step actually exits (not just echo)
+check_file_contains "$WORKFLOW_DIR/$VALIDATE_WORKFLOW" "exit 1" "Fail step can block PRs" \
+  "The '🚫 Fail on Blocking Vulnerabilities' step should exit 1 when critical or high vulnerabilities are found"
+print_new_line
+
+# 2.6: Check if service container has ports configured
+check_file_contains "$WORKFLOW_DIR/$VALIDATE_WORKFLOW" "ports:" "Service container has ports configured" \
+  "The GCP mock service container needs port mapping to be accessible from test steps"
 print_new_line
 
 # =============================================================================
-# Check 3: All three district vaults exist
+# Check 3: Apply Infrastructure Workflow
+# Workflow: adventure02-expert-apply-infrastructure.yaml
 # =============================================================================
+
+print_sub_header "Workflow: Apply Infrastructure"
+
+APPLY_WORKFLOW="adventure02-expert-apply-infrastructure.yaml"
+
+# 3.1: Check if apply workflow ran & succeeded
+check_workflow_succeeded "$APPLY_WORKFLOW" "Apply infrastructure" \
+  "Merge the drift PR to trigger the apply workflow. Check workflow run logs if it fails."
+print_new_line
+
+# 3.2: Check if infrastructure was actually applied (resource exists in mock)
 check_gcp_bucket_exists "cloudhaven-north-market-vault" "North Market vault" \
-  "Run 'make apply' to deploy the infrastructure"
-print_new_line
-
-check_gcp_bucket_exists "cloudhaven-south-bazaar-vault" "South Bazaar vault" \
-  "Run 'make apply' to deploy the infrastructure"
-print_new_line
-
-check_gcp_bucket_exists "cloudhaven-scholars-district-vault" "Scholars District vault" \
-  "Run 'make apply' to deploy the infrastructure"
-print_new_line
-
-# =============================================================================
-# Check 4: All three district ledgers exist
-# =============================================================================
-check_gcp_sql_instance_exists "cloudhaven-north-market-ledger" "North Market ledger" \
-  "Run 'make apply' to deploy the infrastructure" "the-modular-metropolis"
-print_new_line
-
-check_gcp_sql_instance_exists "cloudhaven-south-bazaar-ledger" "South Bazaar ledger" \
-  "Run 'make apply' to deploy the infrastructure" "the-modular-metropolis"
-print_new_line
-
-check_gcp_sql_instance_exists "cloudhaven-scholars-district-ledger" "Scholars District ledger" \
-  "Run 'make apply' to deploy the infrastructure" "the-modular-metropolis"
+  "The apply workflow should create resources in the GCP mock. Check if the workflow completed successfully."
 print_new_line
 
 # =============================================================================
 # Print summary
 # =============================================================================
 
-print_test_summary "the modular metropolis" "$DOCS_URL" "$OBJECTIVE"
+print_test_summary "the guardian protocols" "$DOCS_URL" "$OBJECTIVE"
