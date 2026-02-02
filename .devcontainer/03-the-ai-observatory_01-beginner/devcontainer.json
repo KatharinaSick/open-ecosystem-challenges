@@ -1,0 +1,31 @@
+{
+  "name": "\uD83D\uDD2D Adventure 03 | \uD83D\uDFE2 Beginner (Calibrating the Lens)",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/adventures/03-the-ai-observatory/beginner",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    }
+  },
+  "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/03-the-ai-observatory_01-beginner/post-create.sh",
+  "postStartCommand": "bash /workspaces/${localWorkspaceFolderBasename}/.devcontainer/03-the-ai-observatory_01-beginner/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "fabiospampinato.vscode-todo-plus"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "adventures/03-the-ai-observatory/README.md"
+      ],
+      "permissions": {
+        "codespaces": "write"
+      }
+    }
+  },
+  "forwardPorts": [],
+  "portsAttributes": {},
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  }
+}

@@ -1,0 +1,22 @@
+# Minimal Ollama configuration for Codespaces
+# Using TinyLlama (1.1B parameters) to fit within resource constraints
+
+ollama:
+  # Pre-pull TinyLlama model on startup
+  models:
+    - tinyllama
+
+# Resource limits suitable for GitHub Codespaces - minimal for TinyLlama
+resources:
+  requests:
+    memory: 1Gi
+    cpu: 500m
+  limits:
+    memory: 1Gi
+    cpu: 500m
+
+# Expose service for other pods to connect
+service:
+  type: NodePort
+  port: 11434
+  nodePort: 30105
