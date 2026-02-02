@@ -25,11 +25,11 @@ Browse the available adventures and pick one that interests you:
 **Story:** Join the Infrastructure Guild and modernize CloudHaven's infrastructure from manual provisioning to a
 self-service platform using Infrastructure as Code.
 
-| Level           | Name                   | 🧠 Key Learnings                                                                                                                                |
-|-----------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| 🟢 Beginner     | The Foundation Stones  | <ul><li>Infrastructure as Code with OpenTofu</li><li>Remote state management with GCS backend</li><li>Dynamic & conditional resources</li></ul> |
-| 🟡 Intermediate | The Modular Metropolis | <ul><li>OpenTofu module testing with `tofu test`</li><li>Test-Driven Development (TDD) workflow</li><li>Input validation with regex</li></ul>   |
-| 🔴 Expert       | *Coming Soon*          |                                                                                                                                                 |
+| Level           | Name                   | 🧠 Key Learnings                                                                                                                                           |
+|-----------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🟢 Beginner     | The Foundation Stones  | <ul><li>Infrastructure as Code with OpenTofu</li><li>Remote state management with GCS backend</li><li>Dynamic & conditional resources</li></ul>            |
+| 🟡 Intermediate | The Modular Metropolis | <ul><li>OpenTofu module testing with `tofu test`</li><li>Test-Driven Development (TDD) workflow</li><li>Input validation with regex</li></ul>              |
+| 🔴 Expert       | The Guardian Protocols | <ul><li>GitHub Actions for drift detection and plan/apply</li><li>Integration tests with service containers</li><li>Security scanning with Trivy</li></ul> |
 
 ### December 2025: [Echoes Lost in Orbit](01-echoes-lost-in-orbit/index.md)
 
@@ -87,4 +87,3 @@ start a [discussion](https://community.open-ecosystem.com/c/challenges).
 ## 🚀 Ready to Start?
 
 [Choose your adventure](#available-adventures) and begin learning!
-
