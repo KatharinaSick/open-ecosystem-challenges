@@ -20,6 +20,16 @@ headaches.
 
 Browse the available adventures and pick one that interests you:
 
+### February 2026: [The AI Observatory](03-the-ai-observatory/index.md)
+
+**Story:** Investigate a mysterious bandwidth anomaly at a remote research station by instrumenting its AI system with OpenTelemetry.
+
+| Level           | Name                                                      | 🧠 Key Learnings                                                                                                                                                           |
+|-----------------|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🟢 Beginner     | [Calibrating the Lens](03-the-ai-observatory/beginner.md) | <ul><li>Instrument Python AI apps with [OpenLLMetry](https://github.com/traceloop/openllmetry)</li><li>Analyze traces in [Jaeger](https://www.jaegertracing.io/)</li></ul> |
+| 🟡 Intermediate | *Coming Soon*                                             |                                                                                                                                                                            |
+| 🔴 Expert       | *Coming Soon*                                             |                                                                                                                                                                            |
+
 ### January 2026: [Building CloudHaven](02-building-cloudhaven/index.md)
 
 **Story:** Join the Infrastructure Guild and modernize CloudHaven's infrastructure from manual provisioning to a
@@ -87,4 +97,3 @@ start a [discussion](https://community.open-ecosystem.com/c/challenges).
 ## 🚀 Ready to Start?
 
 [Choose your adventure](#available-adventures) and begin learning!
-

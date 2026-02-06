@@ -10,4 +10,6 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 "$REPO_ROOT/lib/shared/init.sh"
 "$REPO_ROOT/lib/kubernetes/init.sh"
+"$REPO_ROOT/lib/jaeger/init.sh"
+"$REPO_ROOT/lib/otel-collector/init.sh"
 "$REPO_ROOT/lib/ollama/init.sh"

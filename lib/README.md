@@ -12,3 +12,5 @@ Uses ports 30100+, 30200 are intended for apps deployed via ArgoCD.
 - 30103: Jaeger
 - 30104: GCP API Mock
 - 30105: Ollama
+- 30106: OpenTelemetry Collector (GRPC)
+- 30107: OpenTelemetry Collector (HTTP)

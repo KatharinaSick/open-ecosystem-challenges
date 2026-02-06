@@ -1,19 +1,21 @@
 # Minimal Ollama configuration for Codespaces
-# Using TinyLlama (1.1B parameters) to fit within resource constraints
+# Using Qwen2 0.5B to fit within resource constraints
 
 ollama:
-  # Pre-pull TinyLlama model on startup
+  # Pre-pull model on startup
   models:
-    - tinyllama
+    pull:
+      - qwen2.5:0.5b
 
-# Resource limits suitable for GitHub Codespaces - minimal for TinyLlama
+# Resource limits suitable for GitHub Codespaces (2-core, 8GB)
+# Low request allows other pods to schedule, high limit allows bursting during inference
 resources:
   requests:
-    memory: 1Gi
+    memory: 2Gi
     cpu: 500m
   limits:
-    memory: 1Gi
-    cpu: 500m
+    memory: 3Gi
+    cpu: 1500m
 
 # Expose service for other pods to connect
 service:
