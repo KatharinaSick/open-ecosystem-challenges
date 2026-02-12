@@ -7,6 +7,24 @@ spec:
     - name: namespace
     - name: canary-hash
   metrics:
+    - name: traffic-detection
+      initialDelay: 90s # Wait 90 seconds before the first check to allow traffic to flow
+      interval: 10s # Check every 10 seconds
+      count: 5 # Run 5 measurements total
+      successCondition: result[0] >= 0.05 # Success if there are at least 0.05 req/s (ensures real traffic)
+      failureLimit: 3 # Allow up to 3 failures before marking the analysis as failed
+      inconclusiveLimit: 5 # Allow up to 5 inconclusive results (e.g., no data yet)
+      consecutiveErrorLimit: 3 # Allow up to 3 consecutive errors (e.g., Prometheus unavailable)
+      provider:
+        prometheus:
+          address: http://prometheus-server.prometheus.svc.cluster.local
+          # Calculate the per-second request rate over the last 2 minutes
+          # for the canary pods only (filtered by namespace and pod hash)
+          query: |
+            sum(rate(hotrod_requests_total{
+              namespace="{{args.namespace}}",
+              rollouts_pod_template_hash="{{args.canary-hash}}"
+            }[2m]))
     - name: error-rate-lt-5-percent
       initialDelay: 60s
       interval: 10s
