@@ -18,6 +18,14 @@ As the station's systems engineer (someone had to dual-role), you decide to inve
 observability protocol — **OpenTelemetry** — that the company has been rolling out. Time to instrument HubSystem and
 find out what's really going on.
 
+> 📚 **Credits**: The characters of this adventure are borrowed from the
+> fantastic [Murderbot Diaries series by Martha Wells](https://www.marthawells.com/murderbot.htm)! 🤖❤️
+> ️
+>
+> If you haven't read these books yet, I highly encourage you to do so. It is an absolutely brilliant series: funny,
+> action-packed, and surprisingly heartwarming. It follows a security unit that hacked its own governor module and now
+> just wants to be left alone to watch media, but keeps getting pulled into human nonsense. It really is a great read!
+
 ## 🏗️ Architecture
 
 For this challenge, all AI and observability infrastructure (Ollama, OpenTelemetry Collector, Jaeger) runs inside

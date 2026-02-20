@@ -21,6 +21,14 @@ able to do, but ART hasn't locked you out yet. Take this chance to find out what
 Your mission is to diagnose ART's distraction using OpenTelemetry and fix the navigation system before you miss your
 jump.
 
+> 📚 **Credits**: The characters of this adventure are borrowed from the
+> fantastic [Murderbot Diaries series by Martha Wells](https://www.marthawells.com/murderbot.htm)! 🤖❤️
+> ️
+>
+> If you haven't read these books yet, I highly encourage you to do so. It is an absolutely brilliant series: funny,
+> action-packed, and surprisingly heartwarming. It follows a security unit that hacked its own governor module and now
+> just wants to be left alone to watch media, but keeps getting pulled into human nonsense. It really is a great read!
+
 ## 🏗️ Architecture
 
 For this challenge, the **ART Pilot System runs as a local Python application** (outside Kubernetes) with a RAG (
@@ -42,7 +50,9 @@ Sunday, 8 March 2026 at 23:59 CET
 
 ## 💬 Join the discussion
 
-Share your solutions and questions in the [challenge thread](https://community.open-ecosystem.com/t/instrument-debug-a-rag-pipeline-adventure-03-intermediate-is-live/936) in the Open Ecosystem Community.
+Share your solutions and questions in
+the [challenge thread](https://community.open-ecosystem.com/t/instrument-debug-a-rag-pipeline-adventure-03-intermediate-is-live/936)
+in the Open Ecosystem Community.
 
 ## 🎯 Objective
 
@@ -179,4 +189,6 @@ The script will tell you which checks failed. Fix the issues and run it again.
 1. The script will check if your changes are committed and pushed.
 2. Follow the on-screen instructions to commit your changes if needed.
 3. Once everything is ready, the script will generate a **Certificate of Completion**.
-4. **Copy this certificate** and paste it into the [challenge thread](https://community.open-ecosystem.com/t/instrument-debug-a-rag-pipeline-adventure-03-intermediate-is-live/936) to claim your victory! 🏆
+4. **Copy this certificate** and paste it into
+   the [challenge thread](https://community.open-ecosystem.com/t/instrument-debug-a-rag-pipeline-adventure-03-intermediate-is-live/936)
+   to claim your victory! 🏆
