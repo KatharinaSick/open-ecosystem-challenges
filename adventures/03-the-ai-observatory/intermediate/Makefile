@@ -5,7 +5,7 @@
 # the ART Pilot System and Traffic Simulator.
 # ============================================================================
 
-.PHONY: help art traffic
+.PHONY: help art traffic verify
 
 # Default target - show help
 help:
@@ -14,6 +14,9 @@ help:
 	@echo "Application:"
 	@echo "  make art          - Start the ART Pilot System CLI"
 	@echo "  make traffic      - Generate background traffic for metrics"
+	@echo ""
+	@echo "Verification:"
+	@echo "  make verify       - Run verification checks"
 
 # ----------------------------------------------------------------------------
 # Application Targets
@@ -31,7 +34,7 @@ traffic:
 
 apply-rules:
 	@echo "📊 Applying Prometheus recording rules from manifests/prometheus-rule.yaml..."
-	@kubectl apply -f manifests/prometheus-rule-solution.yaml
+	@kubectl apply -f manifests/prometheus-rule.yaml
 	@echo "✅ PrometheusRule applied!"
 	@echo ""
 	@echo "⏳ The Prometheus Operator will automatically reload the configuration."
@@ -39,4 +42,10 @@ apply-rules:
 	@echo ""
 	@echo "💡 View chart at: https://$$CODESPACE_NAME-30102.$$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN/graph?g0.expr=art%3Adistraction_ratio&g0.tab=0"
 
+# ----------------------------------------------------------------------------
+# Verification Targets
+# ----------------------------------------------------------------------------
+
+verify:
+	@./verify.sh
 

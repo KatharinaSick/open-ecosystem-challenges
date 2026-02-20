@@ -42,7 +42,7 @@ Sunday, 8 March 2026 at 23:59 CET
 
 ## 💬 Join the discussion
 
-Share your solutions and questions in the [challenge thread](TODO) in the Open Ecosystem Community.
+Share your solutions and questions in the [challenge thread](https://community.open-ecosystem.com/t/instrument-debug-a-rag-pipeline-adventure-03-intermediate-is-live/936) in the Open Ecosystem Community.
 
 ## 🎯 Objective
 
@@ -179,4 +179,4 @@ The script will tell you which checks failed. Fix the issues and run it again.
 1. The script will check if your changes are committed and pushed.
 2. Follow the on-screen instructions to commit your changes if needed.
 3. Once everything is ready, the script will generate a **Certificate of Completion**.
-4. **Copy this certificate** and paste it into the [challenge thread](TODO) to claim your victory! 🏆
+4. **Copy this certificate** and paste it into the [challenge thread](https://community.open-ecosystem.com/t/instrument-debug-a-rag-pipeline-adventure-03-intermediate-is-live/936) to claim your victory! 🏆

@@ -64,10 +64,10 @@ print_new_line
 # 3) Runtime Verification (Prometheus Metrics)
 print_sub_header "3. Checking Prometheus Metrics..."
 
-check_prometheus_metrics "ART Metrics" "prometheus" "prometheus-server" "80" \
+check_prometheus_metrics "ART Metrics" "prometheus" "prometheus-kube-prometheus-prometheus" "9090" \
   "art_rag_retrieval_count_total:Custom metric 'art_rag_retrieval_count_total' missing. Did you add a custom metric in art.py?"
 
-check_prometheus_rule "art:distraction_ratio" "prometheus" "prometheus-server" "80" \
+check_prometheus_rule "art:distraction_ratio" "prometheus" "prometheus-kube-prometheus-prometheus" "9090" \
   "Recording rule 'art:distraction_ratio' missing. Did you create it in manifests/prometheus-rule.yaml?"
 
 print_new_line
