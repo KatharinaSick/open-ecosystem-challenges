@@ -136,10 +136,12 @@ User Question: {user_input}
 Answer:"""
 
         with tracer.start_as_current_span(f"chat {MODEL_NAME}") as span:
-            span.set_attribute("llm.model", MODEL_NAME)
-            span.set_attribute("llm.provider", "ollama")
-            span.set_attribute("llm.request.type", "chat")
-            span.set_attribute("llm.prompt.length", len(prompt))
+            span.set_attribute("gen_ai.operation.name", "chat")
+            span.set_attribute("gen_ai.provider.name", "ollama")
+            span.set_attribute("gen_ai.request.model", MODEL_NAME)
+            span.set_attribute("server.address", OLLAMA_HOST)
+            span.set_attribute("server.port", 30105)
+
 
             response = self.client.chat(
                 model=MODEL_NAME,
@@ -151,7 +153,11 @@ Answer:"""
 
             response_text = response["message"]["content"]
 
-            span.set_attribute("llm.response.length", len(response_text))
+            span.set_attribute("gen_ai.response.model", response.get("model", MODEL_NAME))
+            span.set_attribute("gen_ai.response.finish_reasons", [response.get("done_reason", "stop")])
+            span.set_attribute("gen_ai.usage.input_tokens", response.get("prompt_eval_count", 0))
+            span.set_attribute("gen_ai.usage.output_tokens", response.get("eval_count", 0))
+
 
         return response_text
 

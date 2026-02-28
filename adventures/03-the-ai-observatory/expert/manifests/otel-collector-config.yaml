@@ -14,6 +14,18 @@ data:
             endpoint: 0.0.0.0:4317
           http:
             endpoint: 0.0.0.0:4318
+    processors:
+      tail_sampling:
+        decision_wait: 10s
+        policies:
+          - name: keep-errors
+            type: status_code
+            status_code:
+              status_codes: [ERROR]
+          - name: keep-slow-traces
+            type: latency
+            latency:
+              threshold_ms: 5000
 
     exporters:
       debug:
@@ -32,4 +44,5 @@ data:
       pipelines:
         traces:
           receivers: [otlp]
+          processors: [tail_sampling]
           exporters: [debug, otlp]
