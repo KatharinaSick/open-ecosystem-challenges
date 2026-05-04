@@ -1,15 +1,18 @@
 package dev.openfeature.demo.java.demo;
 
+import dev.openfeature.sdk.Client;
+import dev.openfeature.sdk.FlagEvaluationDetails;
+import dev.openfeature.sdk.OpenFeatureAPI;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Trial {
 
+    private final Client client = OpenFeatureAPI.getInstance().getClient();
+
     @GetMapping("/")
-    public String observeSubject() {
-        // The lab is reading from a hard-coded label, not from the chart.
-        // Wire OpenFeature in and resolve the "vision_state" flag from flags.json instead.
-        return "untreated";
+    public FlagEvaluationDetails<String> observeSubject() {
+        return client.getStringDetails("vision_state", "untreated");
     }
 }
